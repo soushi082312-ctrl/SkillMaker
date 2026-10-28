@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sourse\Input\Input.cpp" />
     <ClCompile Include="Sourse\Main.cpp" />
     <ClCompile Include="Sourse\Player\Player.cpp" />
     <ClCompile Include="Sourse\Scene\Play\PlayScene.cpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sourse\GameSetting\GameSetting.h" />
+    <ClInclude Include="Sourse\Input\Input.h" />
     <ClInclude Include="Sourse\Player\Player.h" />
     <ClInclude Include="Sourse\Scene\Play\PlayScene.h" />
     <ClInclude Include="Sourse\Scene\SceneManager.h" />

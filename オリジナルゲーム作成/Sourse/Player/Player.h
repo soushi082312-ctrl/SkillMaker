@@ -14,6 +14,7 @@ struct PlayerData
 	float posX;
 	float posY;
 	float moveX;
+	float moveY;
 };
 
 void InitPlayer();
