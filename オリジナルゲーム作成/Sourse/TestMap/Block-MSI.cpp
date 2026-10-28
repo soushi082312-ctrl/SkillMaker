@@ -1,0 +1,72 @@
+﻿#include "Block.h"
+#include "../GameSetting/GameSetting.h"
+
+BlockData g_Blocks[BLOCK_MAX] = { 0 }; 
+int g_BlockHandle[BLOCK_TYPE_MAX] = { 0 };
+
+void InitBlock()
+{
+	BlockData* block = g_Blocks;
+	for (int i = 0; i < BLOCK_MAX; i++, block++)
+	{
+		block->active = false;
+		block->pos = VGet(0.0f, 0.0f, 0.0f);
+		block->type = MAP_CHIP_NONE;
+	}
+}
+
+void LoadBlock()
+{
+	g_BlockHandle[NORMAL_BLOCK] = LoadGraph("Data/TestMap/NormalBlock.png");
+}
+
+void StartBlock()
+{
+}
+
+void StartBlock()
+{
+}
+
+void StepBlock()
+{
+}
+
+void DrawBlock()
+{
+	BlockData* block = g_Blocks;
+	for (int i = 0; i < BLOCK_MAX; i++, block++)
+	{
+		if (block->active)
+		{
+			DrawGraph((int)(block->pos.x), (int)(block->pos.y), block->handle, TRUE);
+		}
+	}
+}
+
+void FinBlock()
+{
+}
+
+BlockData* CreateBlock(MapChipType type, VECTOR pos)
+{
+	BlockData* block = g_Blocks;
+	for (int i = 0; i < BLOCK_MAX; i++, block++)
+	{
+		if (!block->active)
+		{
+			block->active = true;
+			block->handle = g_BlockHandle[type];
+			block->pos = pos;
+			block->type = type;
+			return block;
+		}
+	}
+
+	return nullptr;
+}
+
+BlockData* GetBlocks()
+{
+	return g_Blocks;
+}

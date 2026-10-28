@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{8afb1c21-e474-469f-bf9c-6faef5f88cd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TestMap">
+      <UniqueIdentifier>{cb780598-d7cb-4fdb-a553-15b7c9ce0a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameSetting">
+      <UniqueIdentifier>{8ff9d5e2-8732-4c9d-a537-289184233bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{436e5240-3b9e-4c14-9577-bac0c82da8d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Play">
+      <UniqueIdentifier>{ac7de183-985c-4909-a05d-d1640c83c6f1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sourse\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\TestMap\Block.cpp">
+      <Filter>Source\TestMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\TestMap\MapChip.cpp">
+      <Filter>Source\TestMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\TestMap\MapManager.cpp">
+      <Filter>Source\TestMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Scene\SceneManager.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Scene\Play\PlayScene.cpp">
+      <Filter>Source\Scene\Play</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sourse\TestMap\Block.h">
+      <Filter>Source\TestMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\TestMap\MapChip.h">
+      <Filter>Source\TestMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\TestMap\MapManager.h">
+      <Filter>Source\TestMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\TestMap\MapParameter.h">
+      <Filter>Source\TestMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\GameSetting\GameSetting.h">
+      <Filter>Source\GameSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Scene\SceneManager.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Scene\Play\PlayScene.h">
+      <Filter>Source\Scene\Play</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
