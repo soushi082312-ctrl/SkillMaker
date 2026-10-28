@@ -16,6 +16,9 @@
     <Filter Include="Source\Scene\Play">
       <UniqueIdentifier>{ac7de183-985c-4909-a05d-d1640c83c6f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Player">
+      <UniqueIdentifier>{a2664863-9a8b-4b75-8da6-9cb95b8d5a06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -35,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\Scene\Play\PlayScene.cpp">
       <Filter>Source\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Player\Player.cpp">
+      <Filter>Source\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Scene\Play\PlayScene.h">
       <Filter>Source\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Player\Player.h">
+      <Filter>Source\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
