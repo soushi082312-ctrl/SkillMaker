@@ -1,6 +1,19 @@
 ﻿#include "DxLib.h"
 #include "Player.h"
 #include "../Input/Input.h"
+#include "../Collision/Collision.h"
+
+struct PlayerAnimationParam
+{
+	int interval;
+	int frameNum;
+	int width;
+	int height;
+};
+const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
+{
+	8, 8, 72, 72,
+};
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
 #define PLAYER_DEFAULY_POS_Y (600.0f)
@@ -18,6 +31,10 @@
 PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
 
+void StartPlayerAnimation(PlayerAnimationType anim);	
+void UpdatePlayerAnimation();							
+void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
+
 void InitPlayer()
 {
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
@@ -25,19 +42,31 @@ void InitPlayer()
 	g_PlayerData.moveX = 0.0f;
 	g_PlayerData.moveY = 0.0f;
 	g_PlayerData.active = false;
-	
+	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
+
+	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
+	{
+		InitAnimation(&g_PlayerData.animation[i]);
+	}
+
+	memset(&g_PlayerData.boxCollision, 0, sizeof(g_PlayerData.boxCollision));
 }
 
 void LoadPlayer()
 {
-
+	g_PlayerData.animation[PLAYER_ANIM_IDLE].handle = LoadGraph("Data/Player/Player_待機モーション.png");
 }
 
 void StartPlayer()
 {
 	g_PlayerData.active = true;
 
-	
+	g_PlayerData.boxCollision.posX = PLAYER_BOX_COLLISION_OFFSET_X;
+	g_PlayerData.boxCollision.posY = PLAYER_BOX_COLLISION_OFFSET_Y;
+	g_PlayerData.boxCollision.width = PLAYER_BOX_COLLISION_WIDTH;
+	g_PlayerData.boxCollision.height = PLAYER_BOX_COLLISION_HEIGHT;
+
+	StartPlayerAnimation(PLAYER_ANIM_IDLE);
 }
 
 void StepPlayer()
@@ -86,6 +115,8 @@ void UpdatePlayer()
 
 	g_PlayerData.posX += g_PlayerData.moveX;
 	g_PlayerData.posY += g_PlayerData.moveY;
+
+	UpdatePlayerAnimation();
 }
 
 void DrawPlayer()

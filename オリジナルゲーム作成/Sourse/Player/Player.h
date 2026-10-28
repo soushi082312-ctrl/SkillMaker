@@ -1,10 +1,24 @@
 ﻿#pragma once
 #include "../TestMap/MapParameter.h"
+#include "../Animation/Animation.h"
+#include "../Collision/Collision.h"
 
 
 #define PLAYER_WIDTH	(72.0f)
 #define PLAYER_HEIGHT	(72.0f)
 #define PLAYER_RADIUS	(36.0f)
+
+enum PlayerAnimationType
+{
+	PLAYER_ANIM_IDLE,
+	PLAYER_ANIM_RUN,
+	PLAYER_ANIM_JUMP,
+	PLAYER_ANIM_FALL,
+	PLAYER_ANIM_LANDING,
+	PLAYER_ANIM_ATTACK,
+	PLAYER_ANIM_MAX,
+	PLAYER_ANIM_NONE = -1
+};
 
 struct PlayerData
 {
@@ -15,6 +29,9 @@ struct PlayerData
 	float posY;
 	float moveX;
 	float moveY;
+	AnimationData animation[PLAYER_ANIM_MAX];
+	PlayerAnimationType playAnim;
+	BoxCollision boxCollision;
 };
 
 void InitPlayer();
