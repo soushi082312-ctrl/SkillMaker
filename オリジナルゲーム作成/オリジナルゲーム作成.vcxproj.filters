@@ -22,6 +22,12 @@
     <Filter Include="Source\Input">
       <UniqueIdentifier>{30a2f223-8a83-4187-aa16-4cf251254317}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Collision">
+      <UniqueIdentifier>{2a80350c-6ca3-4f0b-baa6-836216722db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Animation">
+      <UniqueIdentifier>{904122c9-6117-4761-a15b-c23d0b72ea93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -47,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Sourse\Input\Input.cpp">
       <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Collision\Collision.cpp">
+      <Filter>Source\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Animation\Animation.cpp">
+      <Filter>Source\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="Sourse\Input\Input.h">
       <Filter>Source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Collision\Collision.h">
+      <Filter>Source\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Animation\Animation.h">
+      <Filter>Source\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

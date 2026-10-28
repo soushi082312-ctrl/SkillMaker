@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sourse\Animation\Animation.cpp" />
+    <ClCompile Include="Sourse\Collision\Collision.cpp" />
     <ClCompile Include="Sourse\Input\Input.cpp" />
     <ClCompile Include="Sourse\Main.cpp" />
     <ClCompile Include="Sourse\Player\Player.cpp" />
@@ -145,6 +147,8 @@
     <ClCompile Include="Sourse\TestMap\MapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sourse\Animation\Animation.h" />
+    <ClInclude Include="Sourse\Collision\Collision.h" />
     <ClInclude Include="Sourse\GameSetting\GameSetting.h" />
     <ClInclude Include="Sourse\Input\Input.h" />
     <ClInclude Include="Sourse\Player\Player.h" />
