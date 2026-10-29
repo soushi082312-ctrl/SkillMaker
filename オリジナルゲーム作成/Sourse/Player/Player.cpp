@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "../Input/Input.h"
 #include "../Collision/Collision.h"
+#include "../Camera/Camera.h"
 
 struct PlayerAnimationParam
 {
@@ -12,8 +13,7 @@ struct PlayerAnimationParam
 };
 const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 {
-	8, 8, 72, 72,
-	5, 16, 72, 72,
+	8, 1, 50, 76,
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
@@ -125,9 +125,11 @@ void DrawPlayer()
 {
 	if (!g_PlayerData.active) return;
 
+	CameraData camera = GetCamera();
+
 	PlayerAnimationType animType = g_PlayerData.playAnim;
 	AnimationData* animData = &g_PlayerData.animation[animType];
-
+	DrawAnimation(animData, g_PlayerData.posX - camera.posX, g_PlayerData.posY - camera.posY, g_PlayerData.isTurn);
 }
 
 void FinPlayer()
