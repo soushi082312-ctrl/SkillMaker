@@ -4,9 +4,9 @@
 #include "../Collision/Collision.h"
 
 
-#define PLAYER_WIDTH	(236.0f)
+#define PLAYER_WIDTH	(333.0f)
 #define PLAYER_HEIGHT	(333.0f)
-#define PLAYER_RADIUS	(118.0f)
+#define PLAYER_RADIUS	(166.5f)
 
 enum PlayerAnimationType
 {

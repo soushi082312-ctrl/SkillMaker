@@ -31,6 +31,9 @@
     <Filter Include="Source\Camera">
       <UniqueIdentifier>{91a7d9a8-1c49-4eec-bbc6-5e6f0e411fac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\FPS">
+      <UniqueIdentifier>{2de662b0-8a2b-493b-8c8b-1314f1a62b02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\Camera\Camera.cpp">
       <Filter>Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\FPS\FPS.cpp">
+      <Filter>Source\FPS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Camera\Camera.h">
       <Filter>Source\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\FPS\FPS.h">
+      <Filter>Source\FPS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

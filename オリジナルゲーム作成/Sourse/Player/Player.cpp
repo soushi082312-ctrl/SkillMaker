@@ -14,6 +14,9 @@ struct PlayerAnimationParam
 const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 {
 	8, 1, 50, 76,
+	5, 16, 50, 76,
+	8, 1, 50, 76,
+	8, 1, 50, 76,
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
@@ -57,6 +60,9 @@ void LoadPlayer()
 {
 	g_PlayerData.animation[PLAYER_ANIM_IDLE].handle = LoadGraph("Data/Player/Player_待機モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_RUN].handle = LoadGraph("Data/Player/Player_移動モーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_JUMP].handle = LoadGraph("Data/Player/Player_ジャンプモーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 }
 
 void StartPlayer()
@@ -226,6 +232,17 @@ void UpdatePlayerAnimation()
 		else
 		{
 			StartPlayerAnimation(PLAYER_ANIM_IDLE);
+		}
+	}
+	else
+	{
+		if (g_PlayerData.moveY < 0.0f)
+		{
+			StartPlayerAnimation(PLAYER_ANIM_JUMP);
+		}
+		else if (g_PlayerData.moveY > 0.0f)
+		{
+			StartPlayerAnimation(PLAYER_ANIM_FALL);
 		}
 	}
 
