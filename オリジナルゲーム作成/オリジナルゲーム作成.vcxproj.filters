@@ -28,6 +28,9 @@
     <Filter Include="Source\Animation">
       <UniqueIdentifier>{904122c9-6117-4761-a15b-c23d0b72ea93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Camera">
+      <UniqueIdentifier>{91a7d9a8-1c49-4eec-bbc6-5e6f0e411fac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\Animation\Animation.cpp">
       <Filter>Source\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Camera\Camera.cpp">
+      <Filter>Source\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Animation\Animation.h">
       <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Camera\Camera.h">
+      <Filter>Source\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

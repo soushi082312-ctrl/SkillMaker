@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Animation\Animation.cpp" />
+    <ClCompile Include="Sourse\Camera\Camera.cpp" />
     <ClCompile Include="Sourse\Collision\Collision.cpp" />
     <ClCompile Include="Sourse\Input\Input.cpp" />
     <ClCompile Include="Sourse\Main.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sourse\Animation\Animation.h" />
+    <ClInclude Include="Sourse\Camera\Camera.h" />
     <ClInclude Include="Sourse\Collision\Collision.h" />
     <ClInclude Include="Sourse\GameSetting\GameSetting.h" />
     <ClInclude Include="Sourse\Input\Input.h" />
