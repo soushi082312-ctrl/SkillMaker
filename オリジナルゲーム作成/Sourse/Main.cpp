@@ -1,5 +1,6 @@
 ﻿#include "DxLib.h"
 #include "GameSetting/GameSetting.h"
+#include "FPS/FPS.h"
 #include "Scene/SceneManager.h"
 #include "Input/Input.h"
 
@@ -23,6 +24,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	InitInput();
 
+	InitFPS();
+
 	while (ProcessMessage() >= 0)
 	{
 		Sleep(1);
@@ -37,7 +40,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 
-		
+		UpdateFPS();
+
+		DrawFPS();
+
+		FPSWait();
 
 		ScreenFlip();
 	}
