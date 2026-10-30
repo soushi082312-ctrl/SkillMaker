@@ -13,14 +13,14 @@ struct PlayerAnimationParam
 };
 const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 {
-	8, 1, 50, 76,
-	5, 16, 50, 76,
+	8, 1, 45, 76,
+	5, 16, 43, 76,
 	8, 1, 50, 76,
 	8, 1, 50, 76,
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
-#define PLAYER_DEFAULY_POS_Y (600.0f)
+#define PLAYER_DEFAULT_POS_Y (830.0f)
 #define PLAYER_MOVE_SPEED (4.0f)
 
 #define PLAYER_JUMP_POWER (10.0f)
@@ -36,13 +36,13 @@ PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
 
 void StartPlayerAnimation(PlayerAnimationType anim);	
-void UpdatePlayerAnimation();							
+void UpdatePlayerAnimation();
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
 void InitPlayer()
 {
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
-	g_PlayerData.posY = PLAYER_DEFAULY_POS_Y;
+	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y;
 	g_PlayerData.moveX = 0.0f;
 	g_PlayerData.moveY = 0.0f;
 	g_PlayerData.active = false;
@@ -132,7 +132,7 @@ void DrawPlayer()
 	if (!g_PlayerData.active) return;
 
 	CameraData camera = GetCamera();
-
+	
 	PlayerAnimationType animType = g_PlayerData.playAnim;
 	AnimationData* animData = &g_PlayerData.animation[animType];
 	DrawAnimation(animData, g_PlayerData.posX - camera.posX, g_PlayerData.posY - camera.posY, g_PlayerData.isTurn);
@@ -169,7 +169,7 @@ void PlayerHitNormalBlockX(MapChipData mapChipData)
 	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
 		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
-		if (player.moveX > 0.0f)
+		if (player.moveX > 0.0f) 
 		{
 			g_PlayerData.posX -= (x + w) - block->pos.x;
 		}
@@ -185,7 +185,7 @@ void PlayerHitNormalBlockY(MapChipData mapChipData)
 	PlayerData player = g_PlayerData;
 	BlockData* block = mapChipData.data;
 	const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
-	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET + 2;
+	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
 
 	player.isTurn = g_PrevPlayerData.isTurn;
 

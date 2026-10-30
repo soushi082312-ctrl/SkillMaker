@@ -1,5 +1,4 @@
-﻿#include <stdio.h>
-#include "MapChip.h"
+﻿#include "MapChip.h"
 #include "DxLib.h"
 #include "../GameSetting/GameSetting.h"
 #include "MapParameter.h"

@@ -4,9 +4,9 @@
 #include "../Collision/Collision.h"
 
 
-#define PLAYER_WIDTH	(333.0f)
-#define PLAYER_HEIGHT	(333.0f)
-#define PLAYER_RADIUS	(166.5f)
+#define PLAYER_WIDTH	(43)
+#define PLAYER_HEIGHT	(76)
+#define PLAYER_RADIUS	(0)
 
 enum PlayerAnimationType
 {
@@ -29,6 +29,7 @@ struct PlayerData
 	float posY;
 	float moveX;
 	float moveY;
+	int handle;	
 	AnimationData animation[PLAYER_ANIM_MAX];
 	PlayerAnimationType playAnim;
 	BoxCollision boxCollision;

@@ -69,3 +69,4 @@ void CheckCollision()
 {
 	ChceckMapPlayerCollision();
 }
+

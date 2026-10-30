@@ -33,7 +33,6 @@ void FinMap()
 void ChceckMapPlayerCollision()
 {
 	PlayerData player = GetPlayer();
-	
 	int playerX = (int)(player.posX / MAP_CHIP_WIDTH);
 	int playerY = (int)((player.posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
 	int left = playerX - CHECK_ROUND_NUM;
@@ -50,6 +49,7 @@ void ChceckMapPlayerCollision()
 		{
 			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
 
+			
 			MapChipData mapChipData = GetMapChipData(x, y);
 			switch (mapChipData.mapChip)
 			{
@@ -59,6 +59,7 @@ void ChceckMapPlayerCollision()
 			}
 		}
 	}
+
 
 	for (int y = top; y <= bottom; y++)
 	{
