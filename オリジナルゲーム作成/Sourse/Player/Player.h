@@ -8,6 +8,7 @@
 #define PLAYER_HEIGHT	(76)
 #define PLAYER_RADIUS	(0)
 
+
 enum PlayerAnimationType
 {
 	PLAYER_ANIM_IDLE,
@@ -25,6 +26,8 @@ struct PlayerData
 	bool active;
 	bool isTurn;
 	bool isAir;
+	bool isAttack;       
+	int attackTimer;     
 	float posX;
 	float posY;
 	float moveX;

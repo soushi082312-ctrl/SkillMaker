@@ -13,10 +13,11 @@ struct PlayerAnimationParam
 };
 const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 {
-	8, 1, 45, 76,
-	5, 16, 43, 76,
+	8, 1, 90, 76,
+	4, 8, 95, 76,
 	8, 1, 50, 76,
 	8, 1, 50, 76,
+	4, 8, 95, 76,
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
@@ -47,6 +48,8 @@ void InitPlayer()
 	g_PlayerData.moveY = 0.0f;
 	g_PlayerData.active = false;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
+	g_PlayerData.isAttack = false;
+	g_PlayerData.attackTimer = 0;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{
@@ -63,6 +66,7 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_JUMP].handle = LoadGraph("Data/Player/Player_ジャンプモーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
 }
 
 void StartPlayer()
@@ -106,9 +110,12 @@ void StepPlayer()
 		g_PlayerData.moveY = -PLAYER_JUMP_POWER;
 	}
 
-	if (IsTriggerKey(KEY_F))
+	if (IsTriggerKey(KEY_F) && !g_PlayerData.isAttack)
 	{
+		g_PlayerData.isAttack = true;
+		g_PlayerData.attackTimer = 0;
 
+		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
 	}
 }
 
@@ -119,6 +126,17 @@ void UpdatePlayer()
 	if (g_PlayerData.moveY < 0.0f || g_PlayerData.moveY > PLAYER_GRAVITY)
 	{
 		g_PlayerData.isAir = true;
+	}
+
+	if (g_PlayerData.isAttack)
+	{
+		g_PlayerData.attackTimer++;
+
+		if (g_PlayerData.attackTimer >= 32)
+		{
+			g_PlayerData.isAttack = false;
+			g_PlayerData.attackTimer = 0;
+		}
 	}
 
 	g_PlayerData.posX += g_PlayerData.moveX;
@@ -223,9 +241,18 @@ void StartPlayerAnimation(PlayerAnimationType anim)
 
 void UpdatePlayerAnimation()
 {
+	if (g_PlayerData.isAttack)
+	{
+		PlayerAnimationType animType = g_PlayerData.playAnim;
+		AnimationData* animData = &g_PlayerData.animation[animType];
+
+		UpdateAnimation(animData);
+		return;
+	}
+
 	if (!g_PlayerData.isAir)
 	{
-		if (g_PlayerData.moveX < 0.0f || g_PlayerData.moveX > 0.0f)
+		if (g_PlayerData.moveX != 0.0f)
 		{
 			StartPlayerAnimation(PLAYER_ANIM_RUN);
 		}
@@ -245,7 +272,6 @@ void UpdatePlayerAnimation()
 			StartPlayerAnimation(PLAYER_ANIM_FALL);
 		}
 	}
-
 
 	PlayerAnimationType animType = g_PlayerData.playAnim;
 	AnimationData* animData = &g_PlayerData.animation[animType];
