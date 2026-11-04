@@ -38,7 +38,7 @@ void DrawBlock()
 	{
 		if (block->active)
 		{
-			DrawGraph((int)(block->pos.x - camera.posX), (int)(block->pos.y - camera.posY), block->handle, TRUE);
+			DrawGraph((int)(block->pos.x - camera.pos.x), (int)(block->pos.y - camera.pos.y), block->handle, TRUE);
 		}
 	}
 }
@@ -58,6 +58,8 @@ BlockData* CreateBlock(MapChipType type, VECTOR pos)
 			block->handle = g_BlockHandle[type];
 			block->pos = pos;
 			block->type = type;
+			block->width = MAP_CHIP_WIDTH;
+			block->height = MAP_CHIP_HEIGHT;
 			return block;
 		}
 	}

@@ -122,5 +122,8 @@
     <ClInclude Include="Sourse\Skill\Skill.h">
       <Filter>Source\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Sourse\Collision\CollisionParameter.h">
+      <Filter>Source\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

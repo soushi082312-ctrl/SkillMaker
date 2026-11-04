@@ -42,10 +42,10 @@ void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 
 void InitPlayer()
 {
-	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
-	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y;
-	g_PlayerData.moveX = 0.0f;
-	g_PlayerData.moveY = 0.0f;
+	g_PlayerData.pos.x = PLAYER_DEFAULT_POS_X;
+	g_PlayerData.pos.y = PLAYER_DEFAULT_POS_Y;
+	g_PlayerData.move.x = 0.0f;
+	g_PlayerData.move.y = 0.0f;
 	g_PlayerData.active = false;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 	g_PlayerData.isAttack = false;
@@ -90,24 +90,24 @@ void StepPlayer()
 
 	g_PrevPlayerData = g_PlayerData;
 
-	g_PlayerData.moveX = 0.0f;
+	g_PlayerData.move.x = 0.0f;
 
-	g_PlayerData.moveY += PLAYER_GRAVITY;
+	g_PlayerData.move.y += PLAYER_GRAVITY;
 
 	if (IsInputKey(KEY_LEFT))
 	{
-		g_PlayerData.moveX = -PLAYER_MOVE_SPEED;
+		g_PlayerData.move.x = -PLAYER_MOVE_SPEED;
 		g_PlayerData.isTurn = true;
 	}
 	else if (IsInputKey(KEY_RIGHT))
 	{
-		g_PlayerData.moveX = PLAYER_MOVE_SPEED;
+		g_PlayerData.move.x = PLAYER_MOVE_SPEED;
 		g_PlayerData.isTurn = false;
 	}
 
 	if (IsTriggerKey(KEY_SPACE))
 	{
-		g_PlayerData.moveY = -PLAYER_JUMP_POWER;
+		g_PlayerData.move.y = -PLAYER_JUMP_POWER;
 	}
 
 	if (IsTriggerKey(KEY_F) && !g_PlayerData.isAttack)
@@ -123,7 +123,7 @@ void UpdatePlayer()
 {
 	if (!g_PlayerData.active) return;
 
-	if (g_PlayerData.moveY < 0.0f || g_PlayerData.moveY > PLAYER_GRAVITY)
+	if (g_PlayerData.move.y < 0.0f || g_PlayerData.move.y > PLAYER_GRAVITY)
 	{
 		g_PlayerData.isAir = true;
 	}
@@ -139,8 +139,8 @@ void UpdatePlayer()
 		}
 	}
 
-	g_PlayerData.posX += g_PlayerData.moveX;
-	g_PlayerData.posY += g_PlayerData.moveY;
+	g_PlayerData.pos.x += g_PlayerData.move.x;
+	g_PlayerData.pos.y += g_PlayerData.move.y;
 
 	UpdatePlayerAnimation();
 }
@@ -153,7 +153,7 @@ void DrawPlayer()
 	
 	PlayerAnimationType animType = g_PlayerData.playAnim;
 	AnimationData* animData = &g_PlayerData.animation[animType];
-	DrawAnimation(animData, g_PlayerData.posX - camera.posX, g_PlayerData.posY - camera.posY, g_PlayerData.isTurn);
+	DrawAnimation(animData, g_PlayerData.pos.x - camera.posX, g_PlayerData.pos.y - camera.posY, g_PlayerData.isTurn);
 }
 
 void FinPlayer()
@@ -178,8 +178,8 @@ void PlayerHitNormalBlockX(MapChipData mapChipData)
 
 	player.isTurn = g_PrevPlayerData.isTurn;
 
-	player.posX = g_PlayerData.posX;
-	player.posY = g_PrevPlayerData.posY;
+	player.pos.x = g_PlayerData.pos.x;
+	player.pos.y = g_PrevPlayerData.pos.y;
 
 	float x, y, w, h;
 	CalcBoxCollision(player, x, y, w, h);
@@ -187,13 +187,13 @@ void PlayerHitNormalBlockX(MapChipData mapChipData)
 	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
 		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
-		if (player.moveX > 0.0f) 
+		if (player.move.x > 0.0f) 
 		{
-			g_PlayerData.posX -= (x + w) - block->pos.x;
+			g_PlayerData.pos.x -= (x + w) - block->pos.x;
 		}
-		else if (player.moveX < 0.0f)
+		else if (player.move.x < 0.0f)
 		{
-			g_PlayerData.posX += (block->pos.x + MAP_CHIP_WIDTH) - x;
+			g_PlayerData.pos.x += (block->pos.x + MAP_CHIP_WIDTH) - x;
 		}
 	}
 }
@@ -213,16 +213,16 @@ void PlayerHitNormalBlockY(MapChipData mapChipData)
 	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
 		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
-		g_PlayerData.moveY = 0.0f;
+		g_PlayerData.move.y = 0.0f;
 
-		if (player.moveY > 0.0f)
+		if (player.move.y > 0.0f)
 		{
-			g_PlayerData.posY -= (y + h) - block->pos.y;
+			g_PlayerData.pos.y -= (y + h) - block->pos.y;
 			g_PlayerData.isAir = false;
 		}
-		else if (player.moveY < 0.0f)
+		else if (player.move.y < 0.0f)
 		{
-			g_PlayerData.posY += (block->pos.y + MAP_CHIP_WIDTH) - y;
+			g_PlayerData.pos.y += (block->pos.y + MAP_CHIP_WIDTH) - y;
 		}
 	}
 }
@@ -236,7 +236,7 @@ void StartPlayerAnimation(PlayerAnimationType anim)
 	AnimationData* animData = &g_PlayerData.animation[anim];
 	PlayerAnimationParam animParam = PLAYER_ANIM_PARAM[anim];
 
-	StartAnimation(animData, g_PlayerData.posX, g_PlayerData.posY, animParam.interval, animParam.frameNum, animParam.width, animParam.height, true);
+	StartAnimation(animData, g_PlayerData.pos.x, g_PlayerData.pos.y, animParam.interval, animParam.frameNum, animParam.width, animParam.height, true);
 }
 
 void UpdatePlayerAnimation()
@@ -252,7 +252,7 @@ void UpdatePlayerAnimation()
 
 	if (!g_PlayerData.isAir)
 	{
-		if (g_PlayerData.moveX != 0.0f)
+		if (g_PlayerData.move.x != 0.0f)
 		{
 			StartPlayerAnimation(PLAYER_ANIM_RUN);
 		}
@@ -263,11 +263,11 @@ void UpdatePlayerAnimation()
 	}
 	else
 	{
-		if (g_PlayerData.moveY < 0.0f)
+		if (g_PlayerData.move.y < 0.0f)
 		{
 			StartPlayerAnimation(PLAYER_ANIM_JUMP);
 		}
-		else if (g_PlayerData.moveY > 0.0f)
+		else if (g_PlayerData.move.y > 0.0f)
 		{
 			StartPlayerAnimation(PLAYER_ANIM_FALL);
 		}
@@ -281,9 +281,9 @@ void UpdatePlayerAnimation()
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 {
 	x = player.isTurn ?
-		player.posX + PLAYER_WIDTH - player.boxCollision.posX - player.boxCollision.width :
-		player.posX + player.boxCollision.posX;
-	y = player.posY + player.boxCollision.posY;
+		player.pos.x + PLAYER_WIDTH - player.boxCollision.posX - player.boxCollision.width :
+		player.pos.x + player.boxCollision.posX;
+	y = player.pos.y + player.boxCollision.posY;
 	w = player.boxCollision.width;
 	h = player.boxCollision.height;
 }

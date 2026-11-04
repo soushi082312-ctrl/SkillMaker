@@ -2,7 +2,7 @@
 #include "MapParameter.h"
 #include "MapChip.h"
 #include "Block.h"
-#include "../Player/Player.h"
+#include "../Collision/Collision.h"
 
 #define CHECK_ROUND_NUM (2)
 
@@ -30,53 +30,56 @@ void FinMap()
 {
 }
 
-void ChceckMapPlayerCollision()
+void MoveWithMapCollision(Body* body)
 {
-	PlayerData player = GetPlayer();
-	int playerX = (int)(player.posX / MAP_CHIP_WIDTH);
-	int playerY = (int)((player.posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
-	int left = playerX - CHECK_ROUND_NUM;
-	int top = playerY - CHECK_ROUND_NUM;
-	int right = playerX + CHECK_ROUND_NUM;
-	int bottom = playerY + CHECK_ROUND_NUM;
+	body->pos.x += body->move.x;
 
-
-	for (int y = top; y <= bottom; y++)
+	for (int y = 0; y < MAP_CHIP_Y_NUM; y++)
 	{
-		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
-
-		for (int x = left; x <= right; x++)
+		for (int x = 0; x < MAP_CHIP_X_NUM; x++)
 		{
-			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+			MapChipData mapChipData = GetMapChipData(x, y);
+			if (mapChipData.mapChip == 0) continue;
 
+			BlockData* block = mapChipData.data;
+			if (CheckSquareSquare(body->pos.x, body->pos.y, body->width, body->height,
+				                  block->pos.x, block->pos.y, block->width, block->height));
+
+			if (body->move.x > 0.0f)
+			{
+				body->pos.x -= (body->pos.x + body->width) - block->pos.x;
+			}
+			else if (body->move.x < 0.0f)
+			{
+				body->pos.x += (block->pos.x + block->width) - body->pos.x;
+			}
+
+			body->move.x = 0.0f;
+		}
+	}
+
+	body->pos.y += body->move.y;
+
+	for (int y = 0; y < MAP_CHIP_Y_NUM; y++)
+	{
+		for (int x = 0; x < MAP_CHIP_X_NUM; x++)
+		{
+			MapChipData mapChipData = GetMapChipData(x, y);
+			if (mapChipData.mapChip == 0) continue;
+			BlockData* block = mapChipData.data;
+			if (CheckSquareSquare(body->pos.x, body->pos.y, body->width, body->height,
+								  block->pos.x, block->pos.y, block->width, block->height));
+			if (body->move.y > 0.0f)
+			{
+				body->pos.y -= (body->pos.y + body->height) - block->pos.y;
+				body->isAir = false;
+			}
+			else if (body->move.y < 0.0f)
+			{
+				body->pos.y += (block->pos.y + block->height) - body->pos.y;
+			}
 			
-			MapChipData mapChipData = GetMapChipData(x, y);
-			switch (mapChipData.mapChip)
-			{
-			case NORMAL_BLOCK:
-				PlayerHitNormalBlockX(mapChipData);
-				break;
-			}
+			body->move.y = 0.0f;
 		}
 	}
-
-
-	for (int y = top; y <= bottom; y++)
-	{
-		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
-
-		for (int x = left; x <= right; x++)
-		{
-			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
-
-			MapChipData mapChipData = GetMapChipData(x, y);
-			switch (mapChipData.mapChip)
-			{
-			case NORMAL_BLOCK:
-				PlayerHitNormalBlockY(mapChipData);
-				break;
-			}
-		}
-	}
-
 }

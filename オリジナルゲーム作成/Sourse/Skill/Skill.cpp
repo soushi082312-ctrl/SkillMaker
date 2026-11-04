@@ -1,5 +1,6 @@
 ﻿#include "DxLib.h"
 #include "Skill.h"
+#include "../Input/Input.h"
 
 struct SkillAnimationParam
 {
@@ -30,12 +31,20 @@ void LoadSkill()
 
 void StartSkill()
 {
-	
+	g_SkillData.active = true;
 }
 
 void StepSkill()
 {
-	
+	if (!g_SkillData.active)
+	{
+		return;
+	}
+
+	if (IsTriggerKey(KEY_S))
+	{
+
+	}
 }
 
 void UpdateSkill()

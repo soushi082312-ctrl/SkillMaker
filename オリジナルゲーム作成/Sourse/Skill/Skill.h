@@ -6,6 +6,7 @@ enum SkillAnimationType
 	SKILL_ANIM_FIRE,
 	SKILL_ANIM_WATER,
 	SKILL_ANIM_THUNDER,
+	SKILL_ANIM_METEO,
 	SKILL_ANIM_SCAFFOLD,
 	SKILL_ANIM_CHANGE,
 	SKILL_ANIM_WALL,
@@ -17,10 +18,8 @@ enum SkillAnimationType
 struct SkillData
 {
 	bool active;
-	float posX;
-	float posY;
-	float moveX;
-	float moveY;
+	VECTOR pos;
+	VECTOR move;
 	int handle;
 	AnimationData animation[SKILL_ANIM_MAX];
 	SkillAnimationType skillAnim;

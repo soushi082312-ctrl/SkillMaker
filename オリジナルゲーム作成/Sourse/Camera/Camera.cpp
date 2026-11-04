@@ -16,19 +16,19 @@ void StepCamera()
 {
 	PlayerData player = GetPlayer();
 
-	if (player.posX >= CAMERA_SCROLL_SRART_X)
+	if (player.pos.x >= CAMERA_SCROLL_SRART_X)
 	{
-		g_CameraData.posX = player.posX - CAMERA_SCROLL_SRART_X;
+		g_CameraData.pos.x = player.pos.x - CAMERA_SCROLL_SRART_X;
 	}
 	else
 	{
-		g_CameraData.posX = 0.0f;
+		g_CameraData.pos.x = 0.0f;
 	}
 }
 
 void DrawCamera()
 {
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "カメラの座標＝[%f, %f]", g_CameraData.posX, g_CameraData.posY);
+	DrawFormatString(0, 0, GetColor(255, 255, 255), "カメラの座標＝[%f, %f]", g_CameraData.pos.x, g_CameraData.pos.y);
 }
 
 CameraData GetCamera()

@@ -28,10 +28,8 @@ struct PlayerData
 	bool isAir;
 	bool isAttack;       
 	int attackTimer;     
-	float posX;
-	float posY;
-	float moveX;
-	float moveY;
+	VECTOR pos;
+	VECTOR move;
 	int handle;	
 	AnimationData animation[PLAYER_ANIM_MAX];
 	PlayerAnimationType playAnim;

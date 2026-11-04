@@ -2,8 +2,7 @@
 
 struct CameraData
 {
-	float posX;
-	float posY;
+	VECTOR pos;
 };
 
 void InitCamera();

@@ -153,6 +153,7 @@
     <ClInclude Include="Sourse\Animation\Animation.h" />
     <ClInclude Include="Sourse\Camera\Camera.h" />
     <ClInclude Include="Sourse\Collision\Collision.h" />
+    <ClInclude Include="Sourse\Collision\CollisionParameter.h" />
     <ClInclude Include="Sourse\FPS\FPS.h" />
     <ClInclude Include="Sourse\GameSetting\GameSetting.h" />
     <ClInclude Include="Sourse\Input\Input.h" />
