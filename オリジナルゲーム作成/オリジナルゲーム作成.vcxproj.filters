@@ -34,6 +34,9 @@
     <Filter Include="Source\FPS">
       <UniqueIdentifier>{2de662b0-8a2b-493b-8c8b-1314f1a62b02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Skill">
+      <UniqueIdentifier>{9eea8599-8ded-4e32-91a1-11ad7d80d7ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\FPS\FPS.cpp">
       <Filter>Source\FPS</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Skill\Skill.cpp">
+      <Filter>Source\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\FPS\FPS.h">
       <Filter>Source\FPS</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Skill\Skill.h">
+      <Filter>Source\Skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
