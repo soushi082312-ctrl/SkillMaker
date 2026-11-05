@@ -5,6 +5,8 @@
 
 static int g_SelectedSkill = 0;
 
+static int g_SkillHandle[7];
+
 void InitSelectScene() 
 {
 
