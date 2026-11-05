@@ -21,6 +21,9 @@ struct SkillData
 	VECTOR pos;
 	VECTOR move;
 	int handle;
+	int Fire;
+	int Water;
+	int Thunder;
 	AnimationData animation[SKILL_ANIM_MAX];
 	SkillAnimationType skillAnim;
 };

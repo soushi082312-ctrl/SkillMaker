@@ -17,11 +17,13 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 	4, 8, 95, 76,
 	8, 1, 50, 76,
 	8, 1, 50, 76,
-	4, 8, 95, 76,
+	8, 1, 95, 76,
+    5, 10, 86, 76,
+	5, 8, 95, 76
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
-#define PLAYER_DEFAULT_POS_Y (830.0f)
+#define PLAYER_DEFAULT_POS_Y (786.0f)
 #define PLAYER_MOVE_SPEED (4.0f)
 
 #define PLAYER_JUMP_POWER (10.0f)
@@ -49,7 +51,9 @@ void InitPlayer()
 	g_PlayerData.active = false;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 	g_PlayerData.isAttack = false;
+	g_PlayerData.isPose = false;
 	g_PlayerData.attackTimer = 0;
+	g_PlayerData.poseTimer = 0;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{
@@ -67,17 +71,18 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_POSE].handle = LoadGraph("Data/Player/Player_スキルモーション.png");
 }
 
 void StartPlayer()
 {
 	g_PlayerData.active = true;
 
-	g_PlayerData.boxCollision.posX = PLAYER_BOX_COLLISION_OFFSET_X;
-	g_PlayerData.boxCollision.posY = PLAYER_BOX_COLLISION_OFFSET_Y;
+	g_PlayerData.boxCollision.pos.x = PLAYER_BOX_COLLISION_OFFSET_X;
+	g_PlayerData.boxCollision.pos.y = PLAYER_BOX_COLLISION_OFFSET_Y;
 	g_PlayerData.boxCollision.width = PLAYER_BOX_COLLISION_WIDTH;
 	g_PlayerData.boxCollision.height = PLAYER_BOX_COLLISION_HEIGHT;
-
+	
 	StartPlayerAnimation(PLAYER_ANIM_IDLE);
 }
 
@@ -114,8 +119,18 @@ void StepPlayer()
 	{
 		g_PlayerData.isAttack = true;
 		g_PlayerData.attackTimer = 0;
+		g_PlayerData.isTurn = false;
 
 		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
+	}
+
+	if (IsTriggerKey(KEY_S) && !g_PlayerData.isPose)
+	{
+		g_PlayerData.isPose = true;
+		g_PlayerData.poseTimer = 0;
+		g_PlayerData.isTurn = false;
+
+		StartPlayerAnimation(PLAYER_ANIM_POSE);
 	}
 }
 
@@ -139,6 +154,16 @@ void UpdatePlayer()
 		}
 	}
 
+	if (g_PlayerData.isPose)
+	{
+		g_PlayerData.poseTimer++;
+		if (g_PlayerData.poseTimer >= 32)
+		{
+			g_PlayerData.isPose = false;
+			g_PlayerData.poseTimer = 0;
+		}
+	}
+
 	g_PlayerData.pos.x += g_PlayerData.move.x;
 	g_PlayerData.pos.y += g_PlayerData.move.y;
 
@@ -151,9 +176,9 @@ void DrawPlayer()
 
 	CameraData camera = GetCamera();
 	
-	PlayerAnimationType animType = g_PlayerData.playAnim;
+	PlayerAnimationType animType = g_PlayerData.playAnim;  
 	AnimationData* animData = &g_PlayerData.animation[animType];
-	DrawAnimation(animData, g_PlayerData.pos.x - camera.posX, g_PlayerData.pos.y - camera.posY, g_PlayerData.isTurn);
+	DrawAnimation(animData, g_PlayerData.pos.x - camera.pos.x, g_PlayerData.pos.y - camera.pos.y, g_PlayerData.isTurn);
 }
 
 void FinPlayer()
@@ -187,7 +212,7 @@ void PlayerHitNormalBlockX(MapChipData mapChipData)
 	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
 		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
-		if (player.move.x > 0.0f) 
+		if (player.move.x > 0.0f)
 		{
 			g_PlayerData.pos.x -= (x + w) - block->pos.x;
 		}
@@ -245,7 +270,14 @@ void UpdatePlayerAnimation()
 	{
 		PlayerAnimationType animType = g_PlayerData.playAnim;
 		AnimationData* animData = &g_PlayerData.animation[animType];
+		UpdateAnimation(animData);
+		return;
+	}
 
+	if (g_PlayerData.isPose)
+	{
+		PlayerAnimationType animType = g_PlayerData.playAnim;
+		AnimationData* animData = &g_PlayerData.animation[animType];
 		UpdateAnimation(animData);
 		return;
 	}
@@ -281,9 +313,9 @@ void UpdatePlayerAnimation()
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 {
 	x = player.isTurn ?
-		player.pos.x + PLAYER_WIDTH - player.boxCollision.posX - player.boxCollision.width :
-		player.pos.x + player.boxCollision.posX;
-	y = player.pos.y + player.boxCollision.posY;
+		player.pos.x + PLAYER_WIDTH - player.boxCollision.pos.x - player.boxCollision.width :
+		player.pos.x + player.boxCollision.pos.x;
+	y = player.pos.y + player.boxCollision.pos.y;
 	w = player.boxCollision.width;
 	h = player.boxCollision.height;
 }

@@ -23,8 +23,6 @@ void LoadMapChipData()
 
 void CreateMap()
 {
-
-
     for (int i = 0; i < MAP_CHIP_Y_NUM; i++)
     {
         for (int j = 0; j < MAP_CHIP_X_NUM; j++)
@@ -34,12 +32,7 @@ void CreateMap()
 
             if (type == MAP_CHIP_NONE) continue;
 
-            VECTOR pos = VGet(
-                j * MAP_CHIP_WIDTH,
-                i * MAP_CHIP_HEIGHT,
-                0.0f
-            );
-
+			VECTOR pos = VGet(j * MAP_CHIP_WIDTH, i * MAP_CHIP_HEIGHT, 0.0f);
             g_MapChip[i][j].data = CreateBlock(type, pos);          
         }
     }

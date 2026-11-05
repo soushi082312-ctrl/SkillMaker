@@ -2,8 +2,7 @@
 
 struct BoxCollision
 {
-	float posX;
-	float posY;
+	VECTOR pos;
 	float width;
 	float height;
 };

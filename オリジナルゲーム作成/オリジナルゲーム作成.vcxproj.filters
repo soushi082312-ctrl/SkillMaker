@@ -37,6 +37,9 @@
     <Filter Include="Source\Skill">
       <UniqueIdentifier>{9eea8599-8ded-4e32-91a1-11ad7d80d7ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\RESULT">
+      <UniqueIdentifier>{81aecc1b-3506-4787-81ac-a3527394d4b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\Skill\Skill.cpp">
       <Filter>Source\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Scene\Result\ResultScene.cpp">
+      <Filter>Source\Scene\RESULT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,8 +128,8 @@
     <ClInclude Include="Sourse\Skill\Skill.h">
       <Filter>Source\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="Sourse\Collision\CollisionParameter.h">
-      <Filter>Source\Collision</Filter>
+    <ClInclude Include="Sourse\Scene\Result\ResultScene.h">
+      <Filter>Source\Scene\RESULT</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿#include "DxLib.h"
 #include "Skill.h"
 #include "../Input/Input.h"
+#include "../Scene/SceneManager.h"
 
 struct SkillAnimationParam
 {
@@ -13,6 +14,8 @@ struct SkillAnimationParam
 const SkillAnimationParam SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 {
 	8, 8, 73, 90,
+	8, 8, 90, 90,
+	5, 8, 90, 90,
 };
 
 #define SKILL_DEFAULT_POS_X (0.0f)
@@ -20,6 +23,9 @@ const SkillAnimationParam SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 #define SKILL_MOVE_SPEED (4.0f)
 
 SkillData g_SkillData = { 0 };
+
+void StartSkillAnimation(SkillAnimationType anim);
+void UpdateSkillAnimation();
 
 void InitSkill()
 {
@@ -47,15 +53,11 @@ void StepSkill()
 		return;
 	}
 
-	if (IsInputKey(KEY_D))
+	if (IsTriggerKey(KEY_D))
 	{
-
+		ChangeScene(SCENE_RESULT);
 	}
 
-	if (IsTriggerKey(KEY_S))
-	{
-		g_SkillData.move.x = SKILL_MOVE_SPEED;
-	}
 }
 
 void UpdateSkill()
@@ -70,6 +72,31 @@ void DrawSkill()
 
 void FinSkill()
 {
-	
+	for (int i = 0; i < SKILL_ANIM_MAX; i++)
+	{
+		DeleteGraph(g_SkillData.animation[i].handle);
+	}
 }
 
+SkillData GetSkill()
+{
+	return g_SkillData;
+}
+
+void StartSkillAnimation(SkillAnimationType anim)
+{
+	if (anim == g_SkillData.skillAnim) return;
+	g_SkillData.skillAnim = anim;
+	AnimationData* animData = &g_SkillData.animation[anim];
+	SkillAnimationParam animParam = SKILL_ANIM_PARAM[anim];
+	StartAnimation(animData, g_SkillData.pos.x, g_SkillData.pos.y, animParam.interval, animParam.frameNum, animParam.width, animParam.height, true);
+}
+
+void UpdateSkillAnimation()
+{
+	if (g_SkillData.active)
+	{
+		AnimationData* animData = &g_SkillData.animation[g_SkillData.skillAnim];
+		UpdateAnimation(animData);
+	}
+}

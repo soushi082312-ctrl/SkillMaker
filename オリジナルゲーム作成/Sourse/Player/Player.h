@@ -4,9 +4,9 @@
 #include "../Collision/Collision.h"
 
 
-#define PLAYER_WIDTH	(43)
-#define PLAYER_HEIGHT	(76)
-#define PLAYER_RADIUS	(0)
+#define PLAYER_WIDTH	(43.0f)
+#define PLAYER_HEIGHT	(76.0f)
+#define PLAYER_RADIUS	(0.0f)
 
 
 enum PlayerAnimationType
@@ -17,6 +17,7 @@ enum PlayerAnimationType
 	PLAYER_ANIM_FALL,
 	PLAYER_ANIM_LANDING,
 	PLAYER_ANIM_ATTACK,
+	PLAYER_ANIM_POSE,
 	PLAYER_ANIM_MAX,
 	PLAYER_ANIM_NONE = -1
 };
@@ -26,8 +27,10 @@ struct PlayerData
 	bool active;
 	bool isTurn;
 	bool isAir;
-	bool isAttack;       
-	int attackTimer;     
+	bool isAttack;   
+	bool isPose;
+	int attackTimer;
+	int poseTimer;
 	VECTOR pos;
 	VECTOR move;
 	int handle;	

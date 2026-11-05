@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 enum Scene
 {
 	SCENE_NONE,
 	SCENE_PLAY,
+	SCENE_RESULT,
 };
 
 enum SceneState
