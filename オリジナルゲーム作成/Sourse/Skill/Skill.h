@@ -15,6 +15,19 @@ enum SkillAnimationType
 	SKILL_ANIM_NONE = -1
 };
 
+enum SkillType
+{
+	SKILL_FIRE,
+	SKILL_WATER,
+	SKILL_THUNDER,
+	SKILL_METEOR,
+	SKILL_PLATFORM,
+	SKILL_TERRAIN,
+	SKILL_BREAK_WALL,
+	SKILL_TIME_STOP,
+	SKILL_MAX
+};
+
 struct SkillData
 {
 	bool active;
@@ -31,8 +44,7 @@ struct SkillData
 void InitSkill();
 void LoadSkill();
 void StartSkill();
-void StepSkill();
-void UpdateSkill();
+void UpdateSkill(float playerX, float playerY, int playerDirection);
 void DrawSkill();
 void FinSkill();
 
