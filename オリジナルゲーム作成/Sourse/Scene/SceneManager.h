@@ -4,7 +4,7 @@ enum Scene
 {
 	SCENE_NONE,
 	SCENE_PLAY,
-	SCENE_RESULT,
+	SCENE_SELECT,
 };
 
 enum SceneState

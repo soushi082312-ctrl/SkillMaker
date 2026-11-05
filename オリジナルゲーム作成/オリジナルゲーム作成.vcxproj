@@ -143,8 +143,8 @@
     <ClCompile Include="Sourse\Main.cpp" />
     <ClCompile Include="Sourse\Player\Player.cpp" />
     <ClCompile Include="Sourse\Scene\Play\PlayScene.cpp" />
-    <ClCompile Include="Sourse\Scene\Result\ResultScene.cpp" />
     <ClCompile Include="Sourse\Scene\SceneManager.cpp" />
+    <ClCompile Include="Sourse\Scene\Select\SelectScene.cpp" />
     <ClCompile Include="Sourse\Skill\Skill.cpp" />
     <ClCompile Include="Sourse\TestMap\Block.cpp" />
     <ClCompile Include="Sourse\TestMap\MapChip.cpp" />
@@ -159,8 +159,8 @@
     <ClInclude Include="Sourse\Input\Input.h" />
     <ClInclude Include="Sourse\Player\Player.h" />
     <ClInclude Include="Sourse\Scene\Play\PlayScene.h" />
-    <ClInclude Include="Sourse\Scene\Result\ResultScene.h" />
     <ClInclude Include="Sourse\Scene\SceneManager.h" />
+    <ClInclude Include="Sourse\Scene\Select\SelectScene.h" />
     <ClInclude Include="Sourse\Skill\Skill.h" />
     <ClInclude Include="Sourse\TestMap\Block.h" />
     <ClInclude Include="Sourse\TestMap\MapChip.h" />

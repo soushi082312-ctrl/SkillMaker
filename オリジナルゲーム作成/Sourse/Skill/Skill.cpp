@@ -55,7 +55,7 @@ void StepSkill()
 
 	if (IsTriggerKey(KEY_D))
 	{
-		ChangeScene(SCENE_RESULT);
+		ChangeScene(SCENE_SELECT);
 	}
 
 }
