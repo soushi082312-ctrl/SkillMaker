@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../Animation/Animation.h"
+#include "DxLib.h"
 
 enum SkillAnimationType
 {
@@ -32,11 +33,9 @@ enum SkillType
 struct SkillData
 {
 	bool active;
-	bool isPose;
 	VECTOR pos;
 	VECTOR move;
 	int handle;
-	int poseTimer;
 	int Fire;
 	int Water;
 	int Thunder;
@@ -46,7 +45,6 @@ struct SkillData
 
 void InitSkill();
 void LoadSkill();
-void StartSkill();
 void StepSkill();
 void UpdateSkill();
 void DrawSkill();

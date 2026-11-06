@@ -84,6 +84,9 @@
     <ClCompile Include="Sourse\Scene\Select\SelectScene.cpp">
       <Filter>Source\Scene\Select</Filter>
     </ClCompile>
+    <ClCompile Include="Sourse\Skill\SkillManager.cpp">
+      <Filter>Source\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sourse\TestMap\Block.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Scene\Select\SelectScene.h">
       <Filter>Source\Scene\Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Skill\SkillManager.h">
+      <Filter>Source\Skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
