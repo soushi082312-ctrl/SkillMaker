@@ -19,7 +19,6 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 	8, 1, 50, 76,
 	8, 1, 95, 76,
     5, 10, 86, 76,
-	5, 8, 95, 76
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
@@ -51,9 +50,7 @@ void InitPlayer()
 	g_PlayerData.active = false;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 	g_PlayerData.isAttack = false;
-	g_PlayerData.isPose = false;
 	g_PlayerData.attackTimer = 0;
-	g_PlayerData.poseTimer = 0;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{
@@ -71,7 +68,6 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
-	g_PlayerData.animation[PLAYER_ANIM_POSE].handle = LoadGraph("Data/Player/Player_スキルモーション.png");
 }
 
 void StartPlayer()
@@ -123,15 +119,6 @@ void StepPlayer()
 
 		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
 	}
-
-	if (IsTriggerKey(KEY_S) && !g_PlayerData.isPose)
-	{
-		g_PlayerData.isPose = true;
-		g_PlayerData.poseTimer = 0;
-		g_PlayerData.isTurn = false;
-
-		StartPlayerAnimation(PLAYER_ANIM_POSE);
-	}
 }
 
 void UpdatePlayer()
@@ -151,16 +138,6 @@ void UpdatePlayer()
 		{
 			g_PlayerData.isAttack = false;
 			g_PlayerData.attackTimer = 0;
-		}
-	}
-
-	if (g_PlayerData.isPose)
-	{
-		g_PlayerData.poseTimer++;
-		if (g_PlayerData.poseTimer >= 32)
-		{
-			g_PlayerData.isPose = false;
-			g_PlayerData.poseTimer = 0;
 		}
 	}
 
@@ -267,14 +244,6 @@ void StartPlayerAnimation(PlayerAnimationType anim)
 void UpdatePlayerAnimation()
 {
 	if (g_PlayerData.isAttack)
-	{
-		PlayerAnimationType animType = g_PlayerData.playAnim;
-		AnimationData* animData = &g_PlayerData.animation[animType];
-		UpdateAnimation(animData);
-		return;
-	}
-
-	if (g_PlayerData.isPose)
 	{
 		PlayerAnimationType animType = g_PlayerData.playAnim;
 		AnimationData* animData = &g_PlayerData.animation[animType];

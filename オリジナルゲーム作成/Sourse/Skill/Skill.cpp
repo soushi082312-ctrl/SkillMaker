@@ -13,13 +13,14 @@ struct SkillAnimationParam
 
 const SkillAnimationParam SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 {
+    5, 8, 95, 76,
 	8, 8, 73, 90,
 	8, 8, 90, 90,
 	5, 8, 90, 90,
 };
 
-#define SKILL_DEFAULT_POS_X (0.0f)
-#define SKILL_DEFAULT_POS_Y (0.0f)
+#define SKILL_DEFAULT_POS_X (150.0f)
+#define SKILL_DEFAULT_POS_Y (786.0f)
 #define SKILL_MOVE_SPEED (4.0f)
 
 SkillData g_SkillData = { 0 };
@@ -36,10 +37,18 @@ void InitSkill()
 	g_SkillSelect = false;
 	g_SelectSkill = 0;
 	g_SkillDirection = 0;
+    g_SkillData.isPose = false;
+    g_SkillData.poseTimer = 0;
+
+    for (int i = 0; i < SKILL_ANIM_MAX; i++)
+    {
+        InitAnimation(&g_SkillData.animation[i]);
+	}
 }
 
 void LoadSkill()
 {
+	g_SkillData.animation[SKILL_ANIM_POSE].handle = LoadGraph("Data/Skill/Player_スキルモーション.png");
 	g_SkillData.animation[SKILL_ANIM_FIRE].handle = LoadGraph("Data/Skill/火（範囲攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_WATER].handle = LoadGraph("Data/Skill/水（遠距離攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_THUNDER].handle = LoadGraph("Data/Skill/雷（近距離攻撃）.png");
@@ -52,8 +61,16 @@ void StartSkill()
 	g_SkillData.active = true;
 }
 
-void UpdateSkill(float playerX, float playerY, int playerDirection)
+void StepSkill()
 {
+    float playerX, playerY;
+    int playerDirection;
+
+    if (!g_SkillData.active)
+    {
+		return;
+    }
+
     if (IsTriggerKey(KEY_D))
     {
         g_SkillSelect = !g_SkillSelect;
@@ -91,6 +108,8 @@ void UpdateSkill(float playerX, float playerY, int playerDirection)
                 (float)g_SkillDirection,
                 0.0f
             );
+
+            StartSkillAnimation(SKILL_ANIM_POSE);
 
             switch (g_SelectSkill)
             {
@@ -130,6 +149,23 @@ void UpdateSkill(float playerX, float playerY, int playerDirection)
             g_SkillData.active = true;
         }
     }
+
+}
+
+void UpdateSkill()
+{
+    if (g_SkillData.isPose)
+    {
+         g_SkillData.poseTimer++;
+
+        if (g_SkillData.poseTimer >= 32)
+        {
+            g_SkillData.isPose = false;
+            g_SkillData.poseTimer = 0;
+        }
+    }
+
+    UpdateSkillAnimation();
 }
 
 void DrawSkill()
@@ -139,13 +175,7 @@ void DrawSkill()
         AnimationData* animData =
             &g_SkillData.animation[g_SkillData.skillAnim];
 
-        DrawAnimation(
-            animData,
-            animData->posX,
-            animData->posY,
-            false,
-            false
-        );
+        DrawAnimation(animData, animData->posX, animData->posY, false, false);       
     }
 
     if (!g_SkillSelect)
@@ -202,13 +232,12 @@ SkillData GetSkill()
 
 void StartSkillAnimation(SkillAnimationType anim)
 {
-    g_SkillData.skillAnim = anim;
+	if (anim == g_SkillData.skillAnim) return;
 
-    AnimationData* animData =
-        &g_SkillData.animation[anim];
+	g_SkillData.skillAnim = anim;
 
-    SkillAnimationParam animParam =
-        SKILL_ANIM_PARAM[anim];
+	AnimationData* animData = &g_SkillData.animation[anim];
+	SkillAnimationParam animParam = SKILL_ANIM_PARAM[anim];
 
     StartAnimation(animData, g_SkillData.pos.x, g_SkillData.pos.y, animParam.interval, animParam.frameNum, animParam.width, animParam.height, false);   
 }
@@ -226,5 +255,13 @@ void UpdateSkillAnimation()
     if (!animData->active)
     {
         g_SkillData.active = false;
+    }
+
+    if (g_SkillData.isPose)
+    {
+        SkillAnimationType animType = g_SkillData.skillAnim;
+        AnimationData* animData = &g_SkillData.animation[animType];
+        UpdateAnimation(animData);
+        return;
     }
 }

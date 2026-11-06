@@ -3,6 +3,7 @@
 
 enum SkillAnimationType
 {
+	SKILL_ANIM_POSE,
 	SKILL_ANIM_FIRE,
 	SKILL_ANIM_WATER,
 	SKILL_ANIM_THUNDER,
@@ -31,9 +32,11 @@ enum SkillType
 struct SkillData
 {
 	bool active;
+	bool isPose;
 	VECTOR pos;
 	VECTOR move;
 	int handle;
+	int poseTimer;
 	int Fire;
 	int Water;
 	int Thunder;
@@ -44,7 +47,8 @@ struct SkillData
 void InitSkill();
 void LoadSkill();
 void StartSkill();
-void UpdateSkill(float playerX, float playerY, int playerDirection);
+void StepSkill();
+void UpdateSkill();
 void DrawSkill();
 void FinSkill();
 
