@@ -68,6 +68,7 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_POSE].handle = LoadGraph("Data/Player/Player_ポーズモーション.png");
 }
 
 void StartPlayer()

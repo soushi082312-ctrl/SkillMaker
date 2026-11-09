@@ -27,15 +27,17 @@ enum SkillType
 	SKILL_TERRAIN,
 	SKILL_BREAK_WALL,
 	SKILL_TIME_STOP,
-	SKILL_MAX
+	SKILL_MAX,
 };
 
 struct SkillData
 {
 	bool active;
+	bool isTurn;
 	VECTOR pos;
 	VECTOR move;
 	int handle;
+	int life;
 	int Fire;
 	int Water;
 	int Thunder;
