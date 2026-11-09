@@ -52,4 +52,6 @@ void UpdateSkill();
 void DrawSkill();
 void FinSkill();
 
+void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder);
+
 SkillData GetSkill();
