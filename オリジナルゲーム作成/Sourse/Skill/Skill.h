@@ -41,6 +41,10 @@ struct SkillData
 	int Fire;
 	int Water;
 	int Thunder;
+	int Platform;
+	int Terrain;
+	int Wall;
+	int TimeStop;
 	AnimationData animation[SKILL_ANIM_MAX];
 	SkillAnimationType skillAnim;
 };

@@ -17,7 +17,8 @@ const SkillAnimationParm SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 	8, 10, 50, 90,
 	8, 8, 50, 90,
 	8, 11, 50, 90,
-
+	8, 10, 50, 90,
+	8, 10, 50, 90,
 };
 
 #define SKILL_DEFAULT_POS_X (100.0f)
@@ -148,7 +149,17 @@ void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thund
 
 			skill->life = life;
 
+			skill->pos.x = pos.x;
+			skill->pos.y = pos.y;
 
+			skill->move.x = move.x;
+			skill->move.y = move.y;
+
+			skill->Fire = Fire;
+			skill->Water = Water;
+			skill->Thunder = Thunder;
+
+			break;
 		}
 	}
 }
