@@ -53,6 +53,9 @@ void LoadSkill()
 	g_SkillData.animation[SKILL_ANIM_FIRE].handle = LoadGraph("Data/Skill/火（範囲攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_WATER].handle = LoadGraph("Data/Skill/水（遠距離攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_THUNDER].handle = LoadGraph("Data/Skill/雷（近距離攻撃）.png");
+	g_SkillData.animation[SKILL_ANIM_SCAFFOLD].handle = LoadGraph("Data/Skill/足場生成.png");
+	g_SkillData.animation[SKILL_ANIM_WALL].handle = LoadGraph("Data/Skill/壁破壊.png");
+	g_SkillData.animation[SKILL_ANIM_TIMESTOP].handle = LoadGraph("Data/Skill/時間停止.png");
 }
 
 void StepSkill()

@@ -3,6 +3,8 @@
 #include "../Input/Input.h"
 #include "../Collision/Collision.h"
 #include "../Camera/Camera.h"
+#include "../Skill/SkillManager.h"
+#include "../Scene/SceneManager.h"
 
 struct PlayerAnimationParam
 {
@@ -52,6 +54,9 @@ void InitPlayer()
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 	g_PlayerData.isAttack = false;
 	g_PlayerData.attackTimer = 0;
+	g_PlayerData.isPose = false;
+	g_PlayerData.poseTimer = 0;
+	g_PlayerData.skillIntervalTimer = 0;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{
@@ -129,6 +134,11 @@ void StepPlayer()
 		g_PlayerData.isTurn = false;
 
 		StartPlayerAnimation(PLAYER_ANIM_POSE);
+	}
+
+	if (IsTriggerKey(KEY_D))
+	{
+		ChangeScene(SCENE_SELECT);
 	}
 }
 

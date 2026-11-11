@@ -31,6 +31,7 @@ struct PlayerData
 	bool isPose;
 	int attackTimer;
 	int poseTimer;
+	int skillIntervalTimer;
 	VECTOR pos;
 	VECTOR move;
 	int handle;	
