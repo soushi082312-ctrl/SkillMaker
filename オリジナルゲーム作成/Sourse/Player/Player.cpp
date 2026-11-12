@@ -20,8 +20,7 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 	8, 1, 50, 76,
 	8, 1, 50, 76,
 	8, 1, 95, 76,
-    5, 10, 86, 76,
-	5, 8, 90, 76,
+    4, 10, 110, 76,
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)

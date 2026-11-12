@@ -7,3 +7,5 @@ void StepSelectScene();
 void UpdateSelectScene();
 void DrawSelectScene();
 void FinSelectScene();
+
+int GetSelectedSkill();

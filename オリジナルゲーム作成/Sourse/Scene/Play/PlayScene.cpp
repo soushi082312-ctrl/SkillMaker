@@ -32,8 +32,6 @@ void StartPlayScene()
 {
 	StartPlayer();
 
-	StartSkill();
-
 	StartMap();
 }
 

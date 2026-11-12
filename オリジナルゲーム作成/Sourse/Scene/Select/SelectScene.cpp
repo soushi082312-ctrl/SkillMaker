@@ -15,6 +15,9 @@ void InitSelectScene()
 void LoadSelectScene() 
 {
 	g_SkillHandle[0] = LoadGraph("Data/Skill/");
+	g_SkillHandle[1] = LoadGraph("Data/Skill/");
+	g_SkillHandle[2] = LoadGraph("Data/Skill/");
+	g_SkillHandle[3] = LoadGraph("DAta/Skill/");
 }
 
 void StartSelectScene() 
@@ -53,9 +56,22 @@ void UpdateSelectScene()
 void DrawSelectScene() 
 {
 	DrawString(700, 100, "スキル一覧", GetColor(255, 255, 255));
+
+	DrawGraph(550, 200, g_SkillHandle[g_SelectedSkill], TRUE);
+
+	DrawString(650, 750, "← →：SELECT", GetColor(255, 255, 255));
+	DrawString(660, 800, "D：決定", GetColor(255, 255, 255));
 }
 
 void FinSelectScene() 
 {
+	DeleteGraph(g_SkillHandle[0]);
+	DeleteGraph(g_SkillHandle[1]);
+	DeleteGraph(g_SkillHandle[2]);
+	DeleteGraph(g_SkillHandle[3]);
+}
 
+int GetSelectedSkill()
+{
+	return g_SelectedSkill;
 }
