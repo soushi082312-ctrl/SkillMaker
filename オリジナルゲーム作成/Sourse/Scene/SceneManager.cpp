@@ -4,6 +4,8 @@
 
 Scene g_NowScene = SCENE_PLAY;
 
+Scene g_NextScene = SCENE_SELECT;
+
 SceneState g_SceneState = SCENE_STATE_INIT;
 
 bool g_IsLoopEnd = false;
@@ -154,5 +156,7 @@ void FinScene()
 
 void ChangeScene(Scene scene)
 {
+	g_NextScene = scene;
+
 	g_IsLoopEnd = true;
 }

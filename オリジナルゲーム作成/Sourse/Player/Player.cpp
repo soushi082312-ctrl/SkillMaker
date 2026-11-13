@@ -21,14 +21,21 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 	8, 1, 50, 76,
 	8, 1, 95, 76,
     4, 10, 110, 76,
+	6, 8, 135, 76
 };
 
 #define PLAYER_DEFAULT_POS_X (100.0f)
 #define PLAYER_DEFAULT_POS_Y (786.0f)
 #define PLAYER_MOVE_SPEED (4.0f)
+#define PLAYER_SKILL_INTERVAL (15)
 
 #define PLAYER_JUMP_POWER (10.0f)
 #define PLAYER_GRAVITY (0.4f)
+
+#define PLAYER_SKILL_SPEED	  (10.0f)
+#define PLAYER_SKILL_LIFE	  (600)
+#define PLAYER_SKILL_OFFSET_X (23.0f)
+#define PLAYER_SKILL_OFFSET_Y (-3.0f)
 
 #define PLAYER_MAP_COLLISION_OFFSET (0.05f)
 #define PLAYER_BOX_COLLISION_OFFSET_X (24)
@@ -101,6 +108,11 @@ void StepPlayer()
 
 	g_PlayerData.move.y += PLAYER_GRAVITY;
 
+	if (g_PlayerData.skillIntervalTimer > 0)
+	{
+		g_PlayerData.skillIntervalTimer--;
+	}
+
 	if (IsInputKey(KEY_LEFT))
 	{
 		g_PlayerData.move.x = -PLAYER_MOVE_SPEED;
@@ -128,11 +140,19 @@ void StepPlayer()
 
 	if (IsTriggerKey(KEY_S) && !g_PlayerData.isPose)
 	{
+		if (g_PlayerData.skillIntervalTimer <= 0)
+		{
+			float fireX = g_PlayerData.pos.x + PLAYER_SKILL_OFFSET_X;
+			float fireY = g_PlayerData.pos.y + PLAYER_SKILL_OFFSET_Y;
+		}
+
 		g_PlayerData.isPose = true;
 		g_PlayerData.poseTimer = 0;
 		g_PlayerData.isTurn = false;
 
 		StartPlayerAnimation(PLAYER_ANIM_POSE);
+
+		g_PlayerData.skillIntervalTimer = PLAYER_SKILL_INTERVAL;
 	}
 
 	if (IsTriggerKey(KEY_D))
@@ -217,8 +237,7 @@ void PlayerHitNormalBlockX(MapChipData mapChipData)
 	float x, y, w, h;
 	CalcBoxCollision(player, x, y, w, h);
 
-	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
-		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET, block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
 		if (player.move.x > 0.0f)
 		{

@@ -14,7 +14,7 @@ void InitSelectScene()
 
 void LoadSelectScene() 
 {
-	g_SkillHandle[0] = LoadGraph("Data/Skill/");
+	g_SkillHandle[0] = LoadGraph("Data/Skill/Select_火（範囲攻撃）.png");
 	g_SkillHandle[1] = LoadGraph("Data/Skill/");
 	g_SkillHandle[2] = LoadGraph("Data/Skill/");
 	g_SkillHandle[3] = LoadGraph("DAta/Skill/");
