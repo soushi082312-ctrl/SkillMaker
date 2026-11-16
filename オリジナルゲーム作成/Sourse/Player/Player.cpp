@@ -172,14 +172,14 @@ void StepPlayer()
 			g_SelectedSkill--;
 
 			if (g_SelectedSkill < 0)
-				g_SelectedSkill = 5;
+				g_SelectedSkill = 6;
 
 		}
 		else if (IsTriggerKey(KEY_RIGHT))
 		{
 			g_SelectedSkill++;
 
-			if (g_SelectedSkill > 5)
+			if (g_SelectedSkill > 6)
 				g_SelectedSkill = 0;
 
 			
