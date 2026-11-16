@@ -4,7 +4,7 @@
 
 Scene g_NowScene = SCENE_PLAY;
 
-Scene g_NextScene = SCENE_SELECT;
+Scene g_NextScene = SCENE_PLAY;
 
 SceneState g_SceneState = SCENE_STATE_INIT;
 
@@ -62,11 +62,6 @@ void InitScene()
 	case SCENE_PLAY:	
 		InitPlayScene();
 		break;
-	
-	case SCENE_SELECT:
-	
-		InitSelectScene();
-		break;
 	}
 }
 
@@ -76,10 +71,6 @@ void LoadScene()
 	{
 	case SCENE_PLAY:	
 		LoadPlayScene();
-		break;
-
-	case SCENE_SELECT:
-		LoadSelectScene();
 		break;
 	}
 }
@@ -91,10 +82,6 @@ void StartScene()
 	case SCENE_PLAY:	
 		StartPlayScene();
 		break;
-
-	case SCENE_SELECT:
-		StartSelectScene();
-		break;
 	}
 }
 
@@ -104,10 +91,6 @@ void StepScene()
 	{
 	case SCENE_PLAY:	
 		StepPlayScene();
-		break;
-
-	case SCENE_SELECT:
-		StepSelectScene();
 		break;
 	}
 }
@@ -119,10 +102,6 @@ void UpdateScene()
 	case SCENE_PLAY:	
 		UpdatePlayScene();
 		break;
-
-	case SCENE_SELECT:
-		UpdateSelectScene();
-		break;
 	}
 }
 
@@ -133,10 +112,6 @@ void DrawScene()
 	case SCENE_PLAY:	
 		DrawPlayScene();
 		break;
-
-	case SCENE_SELECT:
-		DrawSelectScene();
-		break;
 	}
 }
 
@@ -146,10 +121,6 @@ void FinScene()
 	{
 	case SCENE_PLAY:	
 		FinPlayScene();
-		break;
-
-	case SCENE_SELECT:
-		FinSelectScene();
 		break;
 	}
 }

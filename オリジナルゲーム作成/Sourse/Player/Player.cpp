@@ -46,9 +46,13 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
 
+static int g_SelectedSkill = 0;
+static int g_SkillHandle[6];
+
 void StartPlayerAnimation(PlayerAnimationType anim);	
 void UpdatePlayerAnimation();
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
+void DrawSelectSkill();
 
 void InitPlayer()
 {
@@ -81,6 +85,12 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_POSE].handle = LoadGraph("Data/Player/Player_スキルモーション.png");
+	g_SkillHandle[0] = LoadGraph("Data/Skill/Select_火（範囲攻撃）.png");
+	g_SkillHandle[1] = LoadGraph("Data/Skill/Select_水（遠距離攻撃）.png");
+	g_SkillHandle[2] = LoadGraph("Data/Skill/Select_雷（近距離攻撃）.png");
+	g_SkillHandle[3] = LoadGraph("Data/Skill/Select_隕石（必殺技）.png");
+	g_SkillHandle[4] = LoadGraph("Data/Skill/Select_足場生成.png");
+	g_SkillHandle[5] = LoadGraph("Data/Skill/Select_時間停止.png");
 }
 
 void StartPlayer()
@@ -155,9 +165,27 @@ void StepPlayer()
 		g_PlayerData.skillIntervalTimer = PLAYER_SKILL_INTERVAL;
 	}
 
-	if (IsTriggerKey(KEY_D))
+	if (IsInputKey(KEY_D))
 	{
-		ChangeScene(SCENE_SELECT);
+		if (IsTriggerKey(KEY_LEFT))
+		{
+			g_SelectedSkill--;
+
+			if (g_SelectedSkill < 0)
+				g_SelectedSkill = 5;
+
+		}
+		else if (IsTriggerKey(KEY_RIGHT))
+		{
+			g_SelectedSkill++;
+
+			if (g_SelectedSkill > 5)
+				g_SelectedSkill = 0;
+
+			
+		}
+
+		DrawSelectSkill();
 	}
 }
 
@@ -345,4 +373,13 @@ void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 	y = player.pos.y + player.boxCollision.pos.y;
 	w = player.boxCollision.width;
 	h = player.boxCollision.height;
+}
+
+void DrawSelectSkill()
+{
+	DrawString(700, 100, "スキル一覧", GetColor(255, 255, 255));
+
+	DrawGraph(550, 200, g_SkillHandle[g_SelectedSkill], TRUE);
+
+	DrawString(650, 750, "← →：SELECT", GetColor(255, 255, 255));
 }
