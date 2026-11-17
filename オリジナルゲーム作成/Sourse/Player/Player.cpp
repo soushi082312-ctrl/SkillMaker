@@ -114,7 +114,34 @@ void StepPlayer()
 
 	g_PrevPlayerData = g_PlayerData;
 
-	g_PlayerData.move.x = 0.0f;
+	if (IsInputKey(KEY_D))
+	{
+		g_PlayerData.move.x = 0.0f;
+		g_PlayerData.move.y = 0.0f;
+
+		if (IsTriggerKey(KEY_LEFT))
+		{
+			g_SelectedSkill--;
+
+			if (g_SelectedSkill < 0)
+			{
+				g_SelectedSkill = 5;
+			}
+		}
+		else if (IsTriggerKey(KEY_RIGHT))
+		{
+			g_SelectedSkill++;
+
+			if (g_SelectedSkill > 5)
+			{
+				g_SelectedSkill = 0;
+			}
+		}
+
+		DrawSelectSkill();
+
+		return;
+	}
 
 	g_PlayerData.move.y += PLAYER_GRAVITY;
 
@@ -122,6 +149,8 @@ void StepPlayer()
 	{
 		g_PlayerData.skillIntervalTimer--;
 	}
+
+	g_PlayerData.move.x = 0.0f;
 
 	if (IsInputKey(KEY_LEFT))
 	{
@@ -143,7 +172,6 @@ void StepPlayer()
 	{
 		g_PlayerData.isAttack = true;
 		g_PlayerData.attackTimer = 0;
-		g_PlayerData.isTurn = false;
 
 		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
 	}
@@ -154,44 +182,26 @@ void StepPlayer()
 		{
 			float fireX = g_PlayerData.pos.x + PLAYER_SKILL_OFFSET_X;
 			float fireY = g_PlayerData.pos.y + PLAYER_SKILL_OFFSET_Y;
+
 		}
 
 		g_PlayerData.isPose = true;
 		g_PlayerData.poseTimer = 0;
-		g_PlayerData.isTurn = false;
 
 		StartPlayerAnimation(PLAYER_ANIM_POSE);
 
 		g_PlayerData.skillIntervalTimer = PLAYER_SKILL_INTERVAL;
-	}
-
-	if (IsInputKey(KEY_D))
-	{
-		if (IsTriggerKey(KEY_LEFT))
-		{
-			g_SelectedSkill--;
-
-			if (g_SelectedSkill < 0)
-				g_SelectedSkill = 6;
-
-		}
-		else if (IsTriggerKey(KEY_RIGHT))
-		{
-			g_SelectedSkill++;
-
-			if (g_SelectedSkill > 6)
-				g_SelectedSkill = 0;
-
-			
-		}
-
-		DrawSelectSkill();
 	}
 }
 
 void UpdatePlayer()
 {
 	if (!g_PlayerData.active) return;
+
+	if (IsInputKey(KEY_D))
+	{
+		return;
+	}
 
 	if (g_PlayerData.move.y < 0.0f || g_PlayerData.move.y > PLAYER_GRAVITY)
 	{

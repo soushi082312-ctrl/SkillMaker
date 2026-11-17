@@ -30,3 +30,8 @@ void FinAllSkill()
 {
 	FinSkill();
 }
+
+void RequestFireBullet(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder)
+{
+	FireSkill(life, pos, move, Fire, Water, Thunder);
+}
