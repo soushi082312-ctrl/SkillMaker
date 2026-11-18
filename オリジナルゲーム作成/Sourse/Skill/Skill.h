@@ -51,11 +51,14 @@ struct SkillData
 
 void InitSkill();
 void LoadSkill();
+void StartSkill(int skillType);
 void StepSkill();
 void UpdateSkill();
 void DrawSkill();
 void FinSkill();
 
 void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder);
+
+void StartSkillAnimation(SkillAnimationType anim);
 
 SkillData GetSkill();

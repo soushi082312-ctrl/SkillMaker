@@ -17,7 +17,7 @@ enum PlayerAnimationType
 	PLAYER_ANIM_FALL,
 	PLAYER_ANIM_LANDING,
 	PLAYER_ANIM_ATTACK,
-	PLAYER_ANIM_POSE,
+	PLAYER_ANIM_SKILL_POSE,
 	PLAYER_ANIM_MAX,
 	PLAYER_ANIM_NONE = -1
 };
@@ -29,6 +29,7 @@ struct PlayerData
 	bool isAir;
 	bool isAttack;   
 	bool isPose;
+	int skill;
 	int attackTimer;
 	int poseTimer;
 	int skillIntervalTimer;
@@ -49,6 +50,8 @@ void DrawPlayer();
 void FinPlayer();
 
 PlayerData GetPlayer();
+
+int GetSelectedSkill();
 
 void PlayerHitNormalBlockX(MapChipData mapChipData);
 void PlayerHitNormalBlockY(MapChipData mapChipData);

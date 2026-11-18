@@ -4,6 +4,7 @@
 #include "../Collision/Collision.h"
 #include "../Camera/Camera.h"
 #include "../Skill/SkillManager.h"
+#include "../Skill/Skill.h"
 #include "../Scene/SceneManager.h"
 
 struct PlayerAnimationParam
@@ -42,6 +43,10 @@ const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
 #define PLAYER_BOX_COLLISION_OFFSET_Y (20)
 #define PLAYER_BOX_COLLISION_WIDTH (20)
 #define PLAYER_BOX_COLLISION_HEIGHT (44)
+
+#define SKILL_LIFE (120)
+#define SKILL_SPEED (20.0f)
+#define SKILL_RADIUS (15.0f)
 
 PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
@@ -84,7 +89,7 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/Player_落下モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/Player_着地モーション.png");
 	g_PlayerData.animation[PLAYER_ANIM_ATTACK].handle = LoadGraph("Data/Player/Player_攻撃モーション.png");
-	g_PlayerData.animation[PLAYER_ANIM_POSE].handle = LoadGraph("Data/Player/Player_スキルモーション.png");
+	g_PlayerData.animation[PLAYER_ANIM_SKILL_POSE].handle = LoadGraph("Data/Player/Player_スキルモーション.png");
 	g_SkillHandle[0] = LoadGraph("Data/Skill/Select_火（範囲攻撃）.png");
 	g_SkillHandle[1] = LoadGraph("Data/Skill/Select_水（遠距離攻撃）.png");
 	g_SkillHandle[2] = LoadGraph("Data/Skill/Select_雷（近距離攻撃）.png");
@@ -101,6 +106,8 @@ void StartPlayer()
 	g_PlayerData.boxCollision.pos.y = PLAYER_BOX_COLLISION_OFFSET_Y;
 	g_PlayerData.boxCollision.width = PLAYER_BOX_COLLISION_WIDTH;
 	g_PlayerData.boxCollision.height = PLAYER_BOX_COLLISION_HEIGHT;
+
+	g_PlayerData.skill = GetSelectedSkill();
 	
 	StartPlayerAnimation(PLAYER_ANIM_IDLE);
 }
@@ -176,21 +183,18 @@ void StepPlayer()
 		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
 	}
 
-	if (IsTriggerKey(KEY_S) && !g_PlayerData.isPose)
+	if (IsTriggerKey(KEY_S) &&
+		!g_PlayerData.isPose &&
+		g_PlayerData.skillIntervalTimer <= 0)
 	{
-		if (g_PlayerData.skillIntervalTimer <= 0)
-		{
-			float fireX = g_PlayerData.pos.x + PLAYER_SKILL_OFFSET_X;
-			float fireY = g_PlayerData.pos.y + PLAYER_SKILL_OFFSET_Y;
-
-		}
+		StartSkill(g_SelectedSkill);
 
 		g_PlayerData.isPose = true;
 		g_PlayerData.poseTimer = 0;
 
-		StartPlayerAnimation(PLAYER_ANIM_POSE);
+		g_PlayerData.skillIntervalTimer = 60;
 
-		g_PlayerData.skillIntervalTimer = PLAYER_SKILL_INTERVAL;
+		StartPlayerAnimation(PLAYER_ANIM_SKILL_POSE);
 	}
 }
 
@@ -258,6 +262,11 @@ void FinPlayer()
 PlayerData GetPlayer()
 {
 	return g_PlayerData;
+}
+
+int GetSelectedSkill()
+{
+	return g_SelectedSkill;
 }
 
 void PlayerHitNormalBlockX(MapChipData mapChipData)

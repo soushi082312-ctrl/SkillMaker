@@ -137,5 +137,8 @@
     <ClInclude Include="Sourse\BackGround\BackGround.h">
       <Filter>Source\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="Sourse\Skill\SkillParameter.h">
+      <Filter>Source\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

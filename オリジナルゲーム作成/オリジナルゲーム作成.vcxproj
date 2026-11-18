@@ -164,6 +164,7 @@
     <ClInclude Include="Sourse\Scene\SceneManager.h" />
     <ClInclude Include="Sourse\Skill\Skill.h" />
     <ClInclude Include="Sourse\Skill\SkillManager.h" />
+    <ClInclude Include="Sourse\Skill\SkillParameter.h" />
     <ClInclude Include="Sourse\TestMap\Block.h" />
     <ClInclude Include="Sourse\TestMap\MapChip.h" />
     <ClInclude Include="Sourse\TestMap\MapManager.h" />

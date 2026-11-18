@@ -58,6 +58,32 @@ void LoadSkill()
 	g_SkillData.animation[SKILL_ANIM_TIMESTOP].handle = LoadGraph("Data/Skill/時間停止.png");
 }
 
+void StartSkill(int skillType)
+{
+	switch (skillType)
+	{
+	case 0:
+		StartSkillAnimation(SKILL_ANIM_FIRE);
+		break;
+
+	case 1:
+		StartSkillAnimation(SKILL_ANIM_WATER);
+		break;
+
+	case 2:
+		StartSkillAnimation(SKILL_ANIM_THUNDER);
+		break;
+
+	case 3:
+		StartSkillAnimation(SKILL_ANIM_SCAFFOLD);
+		break;
+
+	case 4:
+		StartSkillAnimation(SKILL_ANIM_TIMESTOP);
+		break;
+	}
+}
+
 void StepSkill()
 {
 	SkillData* skill = &g_SkillData;
