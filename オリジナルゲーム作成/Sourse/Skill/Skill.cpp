@@ -14,15 +14,15 @@ struct SkillAnimationParm
 
 const SkillAnimationParm SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 {
-	8, 10, 50, 90,
+	8, 10, 70, 90,
 	8, 8, 50, 90,
 	8, 11, 50, 90,
 	8, 10, 50, 90,
 	8, 10, 50, 90,
 };
 
-#define SKILL_DEFAULT_POS_X (100.0f)
-#define SKILL_DEFAULT_POS_Y (786.0f)
+#define SKILL_DEFAULT_POS_X (200.0f)
+#define SKILL_DEFAULT_POS_Y (790.0f)
 
 #define SKILL_ACTIVE_AREA_LEFT (60)
 #define SKILL_ACTIVE_AREA_RIGHT (1240)
@@ -30,6 +30,8 @@ const SkillAnimationParm SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 #define SKILL_ACTIVE_AREA_BOTTOM (720)
 
 SkillData g_SkillData = { 0 };
+
+static int g_TimeStopTimer = 0;
 
 void InitSkill()
 {
@@ -58,83 +60,66 @@ void LoadSkill()
 	g_SkillData.animation[SKILL_ANIM_TIMESTOP].handle = LoadGraph("Data/Skill/時間停止.png");
 }
 
-void StartSkill(int skillType)
-{
-	switch (skillType)
-	{
-	case 0:
-		StartSkillAnimation(SKILL_ANIM_FIRE);
-		break;
-
-	case 1:
-		StartSkillAnimation(SKILL_ANIM_WATER);
-		break;
-
-	case 2:
-		StartSkillAnimation(SKILL_ANIM_THUNDER);
-		break;
-
-	case 3:
-		StartSkillAnimation(SKILL_ANIM_METEO);
-		break;
-
-	case 4:
-		StartSkillAnimation(SKILL_ANIM_SCAFFOLD);
-		break;
-
-	case 5:
-		StartSkillAnimation(SKILL_ANIM_TIMESTOP);
-		break;
-	}
-}
-
 void StepSkill()
 {
-	SkillData* skill = &g_SkillData;
-	for (int i = 0; i < SKILL_MAX; i++, skill++)
+	if (g_TimeStopTimer > 0)
 	{
-		if (!skill->active)continue;
+		g_TimeStopTimer--;
+	}
 
-		skill->life--;
+	if (!g_SkillData.active)
+	{
+		return;
+	}
+
+	if (g_SkillData.life > 0)
+	{
+		g_SkillData.life--;
+	}
+
+	if (g_SkillData.life <= 0)
+	{
+		g_SkillData.active = false;
 	}
 }
 
 void UpdateSkill()
 {
-	SkillData* skill = &g_SkillData;
-	for (int i = 0; i < SKILL_MAX; i++, skill++)
+	if (!g_SkillData.active)
 	{
-		if (!skill->active)continue;
+		return;
+	}
 
-		if (skill->life <= 0)
-		{
-			skill->active = false;
-		}
+	if (g_SkillData.skillAnim != SKILL_ANIM_NONE)
+	{
+		AnimationData* animData =
+			&g_SkillData.animation[g_SkillData.skillAnim];
 
-		if (skill->pos.x <= SKILL_ACTIVE_AREA_LEFT || skill->pos.x >= SKILL_ACTIVE_AREA_RIGHT)
-		{
-			skill->active = false;
-		}
-		else if (skill->pos.y <= SKILL_ACTIVE_AREA_TOP || skill->pos.y >= SKILL_ACTIVE_AREA_BOTTOM)
-		{
-			skill->active = false;
-		}
-		
+		UpdateAnimation(animData);
 	}
 }
 
 void DrawSkill()
 {
-	SkillData* skill = &g_SkillData;
-	for (int i = 0; i < SKILL_MAX; i++, skill++)
+	if (!g_SkillData.active)
 	{
-		if (!skill->active)continue;
-
-		SkillAnimationType animType = g_SkillData.skillAnim;
-		AnimationData* animData = &g_SkillData.animation[animType];
-		DrawAnimation(animData, g_SkillData.pos.x, g_SkillData.pos.y, g_SkillData.isTurn);
-
+		return;
 	}
+
+	if (g_SkillData.skillAnim == SKILL_ANIM_NONE)
+	{
+		return;
+	}
+
+	AnimationData* animData =
+		&g_SkillData.animation[g_SkillData.skillAnim];
+
+	DrawAnimation(
+		animData,
+		g_SkillData.pos.x,
+		g_SkillData.pos.y,
+		g_SkillData.isTurn
+	);
 }
 
 void FinSkill()
@@ -147,15 +132,27 @@ void FinSkill()
 
 void StartSkillAnimation(SkillAnimationType anim)
 {
-	if (anim == g_SkillData.skillAnim) return;
+	if (anim < 0 || anim >= SKILL_ANIM_MAX)
+	{
+		return;
+	}
 
 	g_SkillData.skillAnim = anim;
 
 	AnimationData* animData = &g_SkillData.animation[anim];
+
 	SkillAnimationParm animParam = SKILL_ANIM_PARAM[anim];
 
-	StartAnimation(animData, g_SkillData.pos.x, g_SkillData.pos.y, animParam.interval, animParam.frameNum, animParam.width, animParam.height, true);
-
+	StartAnimation(
+		animData,
+		g_SkillData.pos.x,
+		g_SkillData.pos.y,
+		animParam.interval,
+		animParam.frameNum,
+		animParam.width,
+		animParam.height,
+		true
+	);
 }
 
 void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder)
@@ -167,18 +164,7 @@ void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thund
 		{
 			skill->active = true;
 
-			if (Thunder)
-			{
-				skill->Thunder = g_SkillData.animation[SKILL_ANIM_THUNDER].handle;
-			}
-			else if (Water)
-			{
-				skill->Water = g_SkillData.animation[SKILL_ANIM_WATER].handle;
-			}
-			else if (Fire)
-			{
-				skill->Fire = g_SkillData.animation[SKILL_ANIM_FIRE].handle;
-			}
+			
 
 			skill->life = life;
 
@@ -200,4 +186,54 @@ void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thund
 SkillData GetSkill()
 {
 	return g_SkillData;
+}
+
+void StartSkill(int selectedSkill, VECTOR pos, bool isTurn)
+{
+	SkillAnimationType anim = SKILL_ANIM_NONE;
+
+	switch (selectedSkill)
+	{
+	case 0:
+		anim = SKILL_ANIM_FIRE;
+		break;
+
+	case 1:
+		anim = SKILL_ANIM_WATER;
+		break;
+
+	case 2:
+		anim = SKILL_ANIM_THUNDER;
+		break;
+
+	case 3:
+		anim = SKILL_ANIM_METEO;
+		break;
+
+	case 4:
+		anim = SKILL_ANIM_SCAFFOLD;
+		break;
+
+	case 5:
+		anim = SKILL_ANIM_TIMESTOP;
+		g_TimeStopTimer = 180;
+		break;
+
+	default:
+		return;
+	}
+
+	g_SkillData.active = true;
+	g_SkillData.pos.x = SKILL_DEFAULT_POS_X;
+    g_SkillData.pos.y = SKILL_DEFAULT_POS_Y;
+
+	g_SkillData.isTurn = isTurn;
+	g_SkillData.life = 80;
+
+	StartSkillAnimation(anim);
+}
+
+bool IsTimeStopActive()
+{
+	return g_TimeStopTimer > 0;
 }

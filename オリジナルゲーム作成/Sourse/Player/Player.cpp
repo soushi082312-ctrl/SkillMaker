@@ -183,11 +183,18 @@ void StepPlayer()
 		StartPlayerAnimation(PLAYER_ANIM_ATTACK);
 	}
 
+
 	if (IsTriggerKey(KEY_S) &&
 		!g_PlayerData.isPose &&
 		g_PlayerData.skillIntervalTimer <= 0)
 	{
-		StartSkill(g_SelectedSkill);
+		g_PlayerData.skill = g_SelectedSkill;
+
+		StartSkill(
+			g_SelectedSkill,
+			VGet(g_PlayerData.pos.x, g_PlayerData.pos.y, 0.0f),
+			g_PlayerData.isTurn
+		);
 
 		g_PlayerData.isPose = true;
 		g_PlayerData.poseTimer = 0;
@@ -196,6 +203,7 @@ void StepPlayer()
 
 		StartPlayerAnimation(PLAYER_ANIM_SKILL_POSE);
 	}
+
 }
 
 void UpdatePlayer()

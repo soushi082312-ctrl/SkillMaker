@@ -4,14 +4,11 @@
 
 enum SkillAnimationType
 {
-	SKILL_ANIM_POSE,
 	SKILL_ANIM_FIRE,
 	SKILL_ANIM_WATER,
 	SKILL_ANIM_THUNDER,
 	SKILL_ANIM_METEO,
 	SKILL_ANIM_SCAFFOLD,
-	SKILL_ANIM_CHANGE,
-	SKILL_ANIM_WALL,
 	SKILL_ANIM_TIMESTOP,
 	SKILL_ANIM_MAX,
 	SKILL_ANIM_NONE = -1
@@ -24,8 +21,6 @@ enum SkillType
 	SKILL_THUNDER,
 	SKILL_METEOR,
 	SKILL_PLATFORM,
-	SKILL_TERRAIN,
-	SKILL_BREAK_WALL,
 	SKILL_TIME_STOP,
 	SKILL_MAX,
 };
@@ -51,7 +46,6 @@ struct SkillData
 
 void InitSkill();
 void LoadSkill();
-void StartSkill(int skillType);
 void StepSkill();
 void UpdateSkill();
 void DrawSkill();
@@ -62,3 +56,7 @@ void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thund
 void StartSkillAnimation(SkillAnimationType anim);
 
 SkillData GetSkill();
+
+void StartSkill(int selectedSkill, VECTOR pos, bool isTurn);
+
+bool IsTimeStopActive();
