@@ -2,6 +2,7 @@
 #include "Skill.h"
 #include "../Input/Input.h"
 #include "../Scene/SceneManager.h"
+#include "../Camera/Camera.h"
 #include <math.h>
 
 struct SkillAnimationParm
@@ -14,15 +15,16 @@ struct SkillAnimationParm
 
 const SkillAnimationParm SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 {
-	8, 10, 70, 90,
-	8, 8, 50, 90,
-	8, 11, 50, 90,
+	8, 11, 500, 90,
+	10, 8, 65, 90,
+	8, 11, 107, 90,
 	8, 10, 50, 90,
-	8, 10, 50, 90,
+	5, 1, 150, 90,
+	8, 3, 300, 170,
 };
 
-#define SKILL_DEFAULT_POS_X (200.0f)
-#define SKILL_DEFAULT_POS_Y (790.0f)
+#define SKILL_DEFAULT_POS_X (290.0f)
+#define SKILL_DEFAULT_POS_Y (770.0f)
 
 #define SKILL_ACTIVE_AREA_LEFT (60)
 #define SKILL_ACTIVE_AREA_RIGHT (1240)
@@ -31,7 +33,14 @@ const SkillAnimationParm SKILL_ANIM_PARAM[SKILL_ANIM_MAX] =
 
 SkillData g_SkillData = { 0 };
 
+void UpdateSkillAnimation();
+
 static int g_TimeStopTimer = 0;
+
+static VECTOR g_PlatformPos = VGet(0.0f, 0.0f, 0.0f);
+static bool g_PlatformActive = false;
+static bool g_PlatformTurn = false;
+static int g_PlatformLife = 0;
 
 void InitSkill()
 {
@@ -56,7 +65,7 @@ void LoadSkill()
 	g_SkillData.animation[SKILL_ANIM_WATER].handle = LoadGraph("Data/Skill/水（遠距離攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_THUNDER].handle = LoadGraph("Data/Skill/雷（近距離攻撃）.png");
 	g_SkillData.animation[SKILL_ANIM_METEO].handle = LoadGraph("Data/Skill/隕石（必殺技）.png");
-	g_SkillData.animation[SKILL_ANIM_SCAFFOLD].handle = LoadGraph("Data/Skill/足場生成.png");
+	g_SkillData.animation[SKILL_ANIM_SCAFFOLD].handle = LoadGraph("Data/Skill/足場生成2.png");
 	g_SkillData.animation[SKILL_ANIM_TIMESTOP].handle = LoadGraph("Data/Skill/時間停止.png");
 }
 
@@ -67,20 +76,21 @@ void StepSkill()
 		g_TimeStopTimer--;
 	}
 
+	if (g_PlatformActive)
+	{
+		g_PlatformLife--;
+
+		if (g_PlatformLife <= 0)
+		{
+			g_PlatformActive = false;
+		}
+	}
+
 	if (!g_SkillData.active)
 	{
 		return;
 	}
 
-	if (g_SkillData.life > 0)
-	{
-		g_SkillData.life--;
-	}
-
-	if (g_SkillData.life <= 0)
-	{
-		g_SkillData.active = false;
-	}
 }
 
 void UpdateSkill()
@@ -101,12 +111,28 @@ void UpdateSkill()
 
 void DrawSkill()
 {
+	CameraData camera = GetCamera();
+
+	if (g_PlatformActive)
+	{
+		AnimationData* platformAnim =
+			&g_SkillData.animation[SKILL_ANIM_SCAFFOLD];
+
+		DrawAnimation(
+			platformAnim,
+			g_PlatformPos.x - camera.pos.x,
+			g_PlatformPos.y - camera.pos.y,
+			g_PlatformTurn
+		);
+	}
+
 	if (!g_SkillData.active)
 	{
 		return;
 	}
 
-	if (g_SkillData.skillAnim == SKILL_ANIM_NONE)
+	if (g_SkillData.skillAnim == SKILL_ANIM_NONE ||
+		g_SkillData.skillAnim == SKILL_ANIM_SCAFFOLD)
 	{
 		return;
 	}
@@ -116,8 +142,8 @@ void DrawSkill()
 
 	DrawAnimation(
 		animData,
-		g_SkillData.pos.x,
-		g_SkillData.pos.y,
+		g_SkillData.pos.x - camera.pos.x,
+		g_SkillData.pos.y - camera.pos.y,
 		g_SkillData.isTurn
 	);
 }
@@ -132,10 +158,7 @@ void FinSkill()
 
 void StartSkillAnimation(SkillAnimationType anim)
 {
-	if (anim < 0 || anim >= SKILL_ANIM_MAX)
-	{
-		return;
-	}
+	if (anim == g_SkillData.skillAnim) return;
 
 	g_SkillData.skillAnim = anim;
 
@@ -211,8 +234,27 @@ void StartSkill(int selectedSkill, VECTOR pos, bool isTurn)
 		break;
 
 	case 4:
-		anim = SKILL_ANIM_SCAFFOLD;
-		break;
+		g_PlatformPos = pos;
+
+		if (isTurn)
+			g_PlatformPos.x -= 150.0f;
+		else
+			g_PlatformPos.x += 50.0f;
+
+		g_PlatformPos.y += 64.0f;
+
+		g_PlatformTurn = isTurn;
+		g_PlatformActive = true;
+		g_PlatformLife = 600;
+
+		StartAnimation(
+			&g_SkillData.animation[SKILL_ANIM_SCAFFOLD],
+			g_PlatformPos.x,
+			g_PlatformPos.y,
+			5, 1, 150, 90, true
+		);
+
+		return;
 
 	case 5:
 		anim = SKILL_ANIM_TIMESTOP;
@@ -223,17 +265,36 @@ void StartSkill(int selectedSkill, VECTOR pos, bool isTurn)
 		return;
 	}
 
-	g_SkillData.active = true;
 	g_SkillData.pos.x = SKILL_DEFAULT_POS_X;
-    g_SkillData.pos.y = SKILL_DEFAULT_POS_Y;
-
+	g_SkillData.pos.y = SKILL_DEFAULT_POS_Y;
 	g_SkillData.isTurn = isTurn;
-	g_SkillData.life = 80;
-
+	g_SkillData.active = true;
+	
 	StartSkillAnimation(anim);
+}
+
+void UpdateSkillAnimation()
+{
+	SkillAnimationType animType = g_SkillData.skillAnim;
+	AnimationData* animData = &g_SkillData.animation[animType];
+	UpdateAnimation(animData);
 }
 
 bool IsTimeStopActive()
 {
 	return g_TimeStopTimer > 0;
+}
+
+bool GetSkillPlatform(float& left, float& top, float& right)
+{
+	if (!g_PlatformActive)
+	{
+		return false;
+	}
+
+	left = g_PlatformPos.x;
+	top = g_PlatformPos.y;
+	right = left + 150.0f;
+
+	return true;
 }

@@ -58,6 +58,7 @@ void StartPlayerAnimation(PlayerAnimationType anim);
 void UpdatePlayerAnimation();
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 void DrawSelectSkill();
+void PlayerHitSkillPlatform();
 
 void InitPlayer()
 {
@@ -245,6 +246,8 @@ void UpdatePlayer()
 	g_PlayerData.pos.x += g_PlayerData.move.x;
 	g_PlayerData.pos.y += g_PlayerData.move.y;
 
+	PlayerHitSkillPlatform();
+
 	UpdatePlayerAnimation();
 }
 
@@ -400,6 +403,44 @@ void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 	y = player.pos.y + player.boxCollision.pos.y;
 	w = player.boxCollision.width;
 	h = player.boxCollision.height;
+}
+
+void PlayerHitSkillPlatform()
+{
+	float left, top, right;
+
+	if (!GetSkillPlatform(left, top, right))
+	{
+		return;
+	}
+
+	float x, y, w, h;
+	CalcBoxCollision(g_PlayerData, x, y, w, h);
+
+	float prevX, prevY, prevW, prevH;
+	CalcBoxCollision(g_PrevPlayerData,
+		prevX, prevY, prevW, prevH);
+
+	float prevBottom = prevY + prevH;
+	float currentBottom = y + h;
+
+	bool overlapX =
+		x + w > left &&
+		x < right;
+
+	if (overlapX &&
+		g_PlayerData.move.y >= 0.0f &&
+		prevBottom <= top &&
+		currentBottom >= top)
+	{
+		g_PlayerData.pos.y = top
+			- g_PlayerData.boxCollision.pos.y
+			- g_PlayerData.boxCollision.height;
+
+		g_PlayerData.move.y = 0.0f;
+
+		g_PlayerData.isAir = false;
+	}
 }
 
 void DrawSelectSkill()

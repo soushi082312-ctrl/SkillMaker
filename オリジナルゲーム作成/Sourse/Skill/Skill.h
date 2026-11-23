@@ -44,6 +44,7 @@ struct SkillData
 	SkillAnimationType skillAnim;
 };
 
+
 void InitSkill();
 void LoadSkill();
 void StepSkill();
@@ -60,3 +61,5 @@ SkillData GetSkill();
 void StartSkill(int selectedSkill, VECTOR pos, bool isTurn);
 
 bool IsTimeStopActive();
+
+bool GetSkillPlatform(float& left, float& top, float& right);
