@@ -32,7 +32,6 @@ struct SkillData
 	VECTOR pos;
 	VECTOR move;
 	int handle;
-	int life;
 	int Fire;
 	int Water;
 	int Thunder;
@@ -40,6 +39,7 @@ struct SkillData
 	int Terrain;
 	int Wall;
 	int TimeStop;
+	int skillIntervalTimer;
 	AnimationData animation[SKILL_ANIM_MAX];
 	SkillAnimationType skillAnim;
 };
@@ -52,8 +52,6 @@ void UpdateSkill();
 void DrawSkill();
 void FinSkill();
 
-void FireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder);
-
 void StartSkillAnimation(SkillAnimationType anim);
 
 SkillData GetSkill();
@@ -61,5 +59,3 @@ SkillData GetSkill();
 void StartSkill(int selectedSkill, VECTOR pos, bool isTurn);
 
 bool IsTimeStopActive();
-
-bool GetSkillPlatform(float& left, float& top, float& right);

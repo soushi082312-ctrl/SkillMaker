@@ -139,6 +139,7 @@
     <ClCompile Include="Sourse\BackGround\BackGround.cpp" />
     <ClCompile Include="Sourse\Camera\Camera.cpp" />
     <ClCompile Include="Sourse\Collision\Collision.cpp" />
+    <ClCompile Include="Sourse\Enemy\Slime\Slime.cpp" />
     <ClCompile Include="Sourse\FPS\FPS.cpp" />
     <ClCompile Include="Sourse\Input\Input.cpp" />
     <ClCompile Include="Sourse\Main.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Sourse\BackGround\BackGround.h" />
     <ClInclude Include="Sourse\Camera\Camera.h" />
     <ClInclude Include="Sourse\Collision\Collision.h" />
+    <ClInclude Include="Sourse\Enemy\Slime\Slime.h" />
     <ClInclude Include="Sourse\FPS\FPS.h" />
     <ClInclude Include="Sourse\GameSetting\GameSetting.h" />
     <ClInclude Include="Sourse\Input\Input.h" />

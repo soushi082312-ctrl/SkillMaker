@@ -66,8 +66,3 @@ void FinAllSkill()
 {
 	FinSkill();
 }
-
-void RequestFireSkill(int life, VECTOR pos, VECTOR move, int Fire, int Water, int Thunder)
-{
-	FireSkill(life, pos, move, Fire, Water, Thunder);
-}

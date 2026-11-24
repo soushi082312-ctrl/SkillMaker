@@ -40,6 +40,12 @@
     <Filter Include="Source\BackGround">
       <UniqueIdentifier>{55062c48-3d6e-41c7-8a42-5a8acf0bc5ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Enemy">
+      <UniqueIdentifier>{fa3f01aa-3fd3-4701-96af-8d013e5a898c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Enemy\Slime">
+      <UniqueIdentifier>{d2f9473b-b5f9-462e-a605-a3dc234ec9f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sourse\Main.cpp">
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Sourse\BackGround\BackGround.cpp">
       <Filter>Source\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Sourse\Enemy\Slime\Slime.cpp">
+      <Filter>Source\Enemy\Slime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Skill\SkillParameter.h">
       <Filter>Source\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Enemy\Slime\Slime.h">
+      <Filter>Source\Enemy\Slime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
