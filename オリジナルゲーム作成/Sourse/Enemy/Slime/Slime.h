@@ -12,7 +12,7 @@ enum SlimeAnimationType
 	SLIME_ANIM_RUN,
 	SLIME_ANIM_DIE,
 	SLIME_ANIM_MAX, 
-	SLIME_NONE = -1
+	SLIME_ANIM_NONE = -1
 };
 
 struct SlimeData
@@ -23,7 +23,8 @@ struct SlimeData
 	int handle;
 	VECTOR pos;
 	VECTOR move;
-	
+	AnimationData animation[SLIME_ANIM_MAX];
+	SlimeAnimationType slimeAnim;
 };
 
 void InitSlime();
