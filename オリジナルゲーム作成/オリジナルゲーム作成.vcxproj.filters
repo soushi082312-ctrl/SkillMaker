@@ -96,6 +96,9 @@
     <ClCompile Include="Sourse\Enemy\Slime\Slime.cpp">
       <Filter>Source\Enemy\Slime</Filter>
     </ClCompile>
+    <ClCompile Include="Sourse\Enemy\EnemyManager.cpp">
+      <Filter>Source\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sourse\TestMap\Block.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Sourse\Enemy\Slime\Slime.h">
       <Filter>Source\Enemy\Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="Sourse\Enemy\EnemyManager.h">
+      <Filter>Source\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
