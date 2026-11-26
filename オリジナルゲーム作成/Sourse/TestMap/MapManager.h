@@ -7,3 +7,4 @@ void DrawMap();
 void FinMap();
 
 void ChceckMapPlayerCollision();
+void ChceckMapSlimeCollision();

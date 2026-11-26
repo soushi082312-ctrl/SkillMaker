@@ -3,6 +3,7 @@
 void InitEnemy();
 void LoadEnemy();
 void StartEnemy();
-void SteppEnemy();
+void StepEnemy();
+void UpdateEnemy();
 void DrawEnemy();
-void FinEnmy();
+void FinEnemy();

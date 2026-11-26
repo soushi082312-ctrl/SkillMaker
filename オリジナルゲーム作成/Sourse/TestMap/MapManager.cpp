@@ -3,6 +3,7 @@
 #include "MapChip.h"
 #include "Block.h"
 #include "../Player/Player.h"
+#include "../Enemy/Slime/Slime.h"
 
 #define CHECK_ROUND_NUM (2)
 
@@ -71,6 +72,54 @@ void ChceckMapPlayerCollision()
 			{
 			case NORMAL_BLOCK:
 				PlayerHitNormalBlockY(mapChipData);
+				break;
+			}
+		}
+	}
+
+}
+
+void ChceckMapSlimeCollision()
+{
+	SlimeData slime = GetSlime();
+	int slimeX = (int)(slime.pos.x / MAP_CHIP_WIDTH);
+	int slimeY = (int)((slime.pos.y + SLIME_HEIGHT) / MAP_CHIP_HEIGHT);
+	int left = slimeX - CHECK_ROUND_NUM;
+	int top = slimeY - CHECK_ROUND_NUM;
+	int right = slimeX + CHECK_ROUND_NUM;
+	int bottom = slimeY + CHECK_ROUND_NUM;
+
+	for (int y = top; y <= bottom; y++)
+	{
+		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
+
+		for (int x = left; x <= right; x++)
+		{
+			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+
+			MapChipData mapChipData = GetMapChipData(x, y);
+			switch (mapChipData.mapChip)
+			{
+			case NORMAL_BLOCK:
+				SlimeHitNormalBlockX(mapChipData);
+				break;
+			}
+		}
+	}
+
+	for (int y = top; y <= bottom; y++)
+	{
+		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
+
+		for (int x = left; x <= right; x++)
+		{
+			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+
+			MapChipData mapChipData = GetMapChipData(x, y);
+			switch (mapChipData.mapChip)
+			{
+			case NORMAL_BLOCK:
+				SlimeHitNormalBlockY(mapChipData);
 				break;
 			}
 		}

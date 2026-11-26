@@ -68,4 +68,5 @@ bool CheckCircleCircle(float circleA_PosX, float circleA_PosY, float circleA_Rad
 void CheckCollision()
 {
 	ChceckMapPlayerCollision();
+	ChceckMapSlimeCollision();
 }

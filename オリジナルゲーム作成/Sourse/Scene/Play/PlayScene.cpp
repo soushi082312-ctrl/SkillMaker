@@ -2,6 +2,7 @@
 #include "../../Scene/SceneManager.h"
 #include "../../TestMap/MapManager.h"
 #include "../../Player/Player.h"
+#include "../../Enemy/EnemyManager.h"
 #include "../../BackGround/BackGround.h"
 #include "../../Skill/Skill.h"
 #include "../../Camera/Camera.h"
@@ -10,6 +11,8 @@
 void InitPlayScene()
 {
 	InitPlayer();
+
+	InitEnemy();
 
 	InitSkill();
 
@@ -22,6 +25,8 @@ void LoadPlayScene()
 {
     LoadPlayer();
 
+	LoadEnemy();
+
 	LoadSkill();
 
 	LoadMap();
@@ -31,12 +36,16 @@ void StartPlayScene()
 {
 	StartPlayer();
 
+	StartEnemy();
+
 	StartMap();
 }
 
 void StepPlayScene()
 {
 	StepPlayer();
+
+	StepEnemy();
 
 	StepSkill();
 
@@ -47,6 +56,8 @@ void UpdatePlayScene()
 {
 	UpdatePlayer();
 
+	UpdateEnemy();
+
 	UpdateSkill();
 
 	CheckCollision();
@@ -55,6 +66,8 @@ void UpdatePlayScene()
 void DrawPlayScene()
 {
 	DrawPlayer();
+
+	DrawEnemy();
 
 	DrawSkill();
 
@@ -68,6 +81,8 @@ void FinPlayScene()
 	FinMap();
 
 	FinPlayer();
+
+	FinEnemy();
 
 	FinSkill();
 }
